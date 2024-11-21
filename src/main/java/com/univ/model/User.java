@@ -1,11 +1,10 @@
 package com.univ.model;
 
+import java.util.Date;
 import java.util.UUID;
-
 import com.univ.enums.Role;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -19,8 +18,7 @@ public class User {
 
   @Column(nullable = false, unique = true, length = 50)
   @NotBlank
-  @Email
-  private String email;
+  private String username;
 
   @Column(nullable = false, length = 255)
   @NotBlank
@@ -31,13 +29,21 @@ public class User {
   @Enumerated(EnumType.STRING)
   private Role role;
 
+  @Column(nullable = false, name = "created_at", updatable = false)
+  private Date createdAt;
+
+  @Column(nullable = true, name = "updated_at", updatable = true)
+  private Date updatedAt;
+
   public User() {
+    this.createdAt = new Date();
   }
 
-  public User(String email, String password, Role role) {
-    this.email = email;
+  public User(String username, String password, Role role) {
+    this.username = username;
     this.password = password;
     this.role = role;
+    this.createdAt = new Date();
   }
 
   public UUID getId() {
@@ -48,12 +54,12 @@ public class User {
     this.id = id;
   }
 
-  public String getEmail() {
-    return email;
+  public String getUsername() {
+    return this.username;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getPassword() {
@@ -72,8 +78,28 @@ public class User {
     this.role = role;
   }
 
-  public static User clone(User user) {
-    return new User(user.getEmail(), user.getPassword(), user.getRole());
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public static User copyOf(User user) {
+    return new User(user.getUsername(), user.getPassword(), user.getRole());
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "id=" + id +
+        ", username='" + username + '\'' +
+        ", password='" + password + '\'' +
+        ", role=" + role +
+        ", createdAt=" + createdAt +
+        ", updatedAt=" + updatedAt +
+        '}';
   }
 
 }
