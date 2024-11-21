@@ -11,14 +11,9 @@
 
       <servlet-mapping>
             <servlet-name>DefaultServlet</servlet-name>
-            <url-pattern>/ressources/*</url-pattern>
+            <url-pattern>/resources/*</url-pattern>
       </servlet-mapping>
-
-      <resource-ref>
-            <description>MySQL Database</description>
-            <res-ref-name>jdbc/projet</res-ref-name>
-            <res-type>javax.sql.DataSource</res-type>
-            <res-auth>Container</res-auth>
-            <res-sharing-scope>Shareable</res-sharing-scope>
-      </resource-ref>
+      <session-config>
+            <session-timeout>60</session-timeout>
+      </session-config>
 </web-app>
