@@ -1,3 +1,4 @@
+<%@ page errorPage="errors/error.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,6 @@
 </head>
 <body>
   <jsp:include page="components/nav.jsp" />
-  <p>Hello World</p>
+  
 </body>
 </html>

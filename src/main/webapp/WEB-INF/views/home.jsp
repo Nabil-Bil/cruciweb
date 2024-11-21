@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error Page</title>
+  <title>Cruciweb</title>
 </head>
-
 <body>
-  <h1>Error Occurred</h1>
-  <p>Please contact the administrator if the issue persists.</p>
+  Home Page You are logged in as ${sessionScope.user.username}
+  
 </body>
-
 </html>
