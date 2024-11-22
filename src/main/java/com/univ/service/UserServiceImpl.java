@@ -5,7 +5,8 @@ import com.univ.repository.UserRepository;
 import com.univ.repository.UserRepositoryImpl;
 import com.univ.util.BCrypt;
 
-import jakarta.ws.rs.NotFoundException;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserService {
   }
 
   public User createUser(User user) throws Exception {
+    if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+      throw new EntityExistsException("Ce nom d'utilisateur existe déjà");
+    }
     String userPassword = user.getPassword();
     String hashedPassword = BCrypt.hashPassword(userPassword);
     User cloneUser = User.copyOf(user);
@@ -37,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
   public User updateUser(User user) throws Exception {
     if (user.getId() == null || userRepository.findById(user.getId()).isEmpty()) {
-      throw new NotFoundException(User.class.getName());
+      throw new EntityNotFoundException("Utilisateur non trouvé");
     }
     return userRepository.save(user);
   }

@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.univ.exceptions.NotFoundException;
 import com.univ.model.User;
 import com.univ.util.EntityManagerProvider;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.EntityTransaction;
 
 public class UserRepositoryImpl implements UserRepository {
@@ -52,7 +52,8 @@ public class UserRepositoryImpl implements UserRepository {
         eManager.getTransaction().commit();
         return;
       }
-      throw new NotFoundException(User.class.getName());
+      throw new EntityNotFoundException("Utilisateur non trouvé");
+
     } catch (Exception e) {
       if (eManager.getTransaction().isActive())
         eManager.getTransaction().rollback();
@@ -73,6 +74,24 @@ public class UserRepositoryImpl implements UserRepository {
       eManager.close();
     }
 
+  }
+
+  @Override
+  public Optional<User> findByUsername(String username) throws Exception {
+    EntityManager eManager = this.entityManagerFactory.createEntityManager();
+    try {
+      User user = eManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+          .setParameter("username", username)
+          .getResultList()
+          .stream()
+          .findFirst()
+          .orElse(null);
+      return Optional.ofNullable(user);
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      eManager.close();
+    }
   }
 
   @Override

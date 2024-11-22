@@ -12,6 +12,8 @@ public interface UserRepository {
 
   Optional<User> findById(UUID id) throws Exception;
 
+  Optional<User> findByUsername(String username) throws Exception;
+
   List<User> findAll() throws Exception;
 
 }
