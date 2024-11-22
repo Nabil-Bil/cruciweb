@@ -1,0 +1,73 @@
+@import url(fonts.css);
+@import url(reset.css);
+body {
+  font-family: "Poppins", sans-serif;
+}
+.flex {
+  display: flex;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-around {
+  justify-content: space-around;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.align-center {
+  align-items: center;
+}
+.align-start {
+  align-items: flex-start;
+}
+.align-end {
+  align-items: flex-end;
+}
+.flex-1 {
+  flex: 1;
+}
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+a#logo {
+  font-family: "Imperial Script";
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+  gap: 25px;
+}
+#logo-image {
+  width: 100px;
+  height: 100px;
+}
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+#topbar ul {
+  font-weight: 600;
+  display: flex;
+  width: max-content;
+  gap: 12px;
+  align-items: center;
+  font-size: larger;
+}
