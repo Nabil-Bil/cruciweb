@@ -1,0 +1,44 @@
+@import url(main.css);
+body{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+#topbar{
+  flex:1;
+}
+body > div{
+  flex:9;
+}
+.card {
+  padding: 25px;
+}
+
+#auth-form h1 {
+  font-weight: bolder;
+  margin-bottom: 12px;
+  align-self: center;
+  font: 4rem "Imperial Script", sans-serif;
+}
+
+#auth-form {
+  font-size: 1.2rem;
+}
+
+#auth-form label {
+  font-weight: 600;
+}
+
+#auth-form button {
+  align-self: center;
+}
+
+#auth-form>p {
+  align-self: center;
+  margin-top: 25px;
+}
+
+#auth-form>p a {
+  font-weight: bold;
+}
