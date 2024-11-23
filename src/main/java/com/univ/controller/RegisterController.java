@@ -21,7 +21,6 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RegisterController extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    resp.setContentType("text/html");
     String csrfToken = CsrfTokenUtil.generateCsrfToken(req);
     req.setAttribute(CsrfTokenUtil.CSRF_SESSION_ATTRIBUTE, csrfToken);
     ViewResolver.resolve(req, "auth/register.jsp").forward(req, resp);
