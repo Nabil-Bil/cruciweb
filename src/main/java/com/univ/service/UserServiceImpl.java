@@ -3,7 +3,7 @@ package com.univ.service;
 import com.univ.model.User;
 import com.univ.repository.UserRepository;
 import com.univ.repository.UserRepositoryImpl;
-import com.univ.util.BCrypt;
+import com.univ.util.BCryptUtil;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
       throw new EntityExistsException("Ce nom d'utilisateur existe déjà");
     }
     String userPassword = user.getPassword();
-    String hashedPassword = BCrypt.hashPassword(userPassword);
+    String hashedPassword = BCryptUtil.hashPassword(userPassword);
     User cloneUser = User.copyOf(user);
     cloneUser.setPassword(hashedPassword);
     return userRepository.save(cloneUser);
