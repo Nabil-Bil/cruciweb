@@ -11,7 +11,7 @@
 <body>
   <jsp:include page="../components/nav.jsp" />
   <div class="center-content">
-    <form action="register" method="post" id="auth-form" class="card">
+    <form action="${pageContext.request.contextPath}/register" method="post" id="auth-form" class="card">
       <h1>Inscription</h1>
       <span class="${not empty username_error ? 'error' : 'hidden'}">${username_error}</span>
       <label for="username">Nom d'utilsiateur</label>
@@ -25,7 +25,7 @@
   
       <input type="hidden" name="csrfToken" value="${csrfToken}" />
   
-      <button type="submit">S'inscrire</button>
+      <button type="submit" class="button">S'inscrire</button>
       <p style="align-self: center; margin-top: 25px">
         Vous avez déja un compte? <a href="login">Connectez-vous</a>
       </p>

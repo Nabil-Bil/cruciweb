@@ -13,6 +13,10 @@ body > div{
 }
 .card {
   padding: 25px;
+  animation: fadeIn 2s ease-in-out;
+  background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.762);
+  
 }
 
 #auth-form h1 {
