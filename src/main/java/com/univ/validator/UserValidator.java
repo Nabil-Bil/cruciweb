@@ -35,7 +35,7 @@ public class UserValidator extends BaseValidator {
     return this;
   }
 
-  public UserValidator validatePassword(String passwordConfirmation) {
+  public UserValidator validatePassword() {
     String password = this.user.getPassword();
     if (!validateNotNull(password) || !validateNotBlank(password)) {
       validationErrors.add(new ValidationError("password", "Mot de passe ne peut être vide"));
@@ -49,6 +49,12 @@ public class UserValidator extends BaseValidator {
       validationErrors.add(new ValidationError("password", "Mot de passe ne pas doit pas dépasser 255 caractères"));
       return this;
     }
+    return this;
+  }
+
+  public UserValidator validatePassword(String passwordConfirmation) {
+    String password = this.user.getPassword();
+    this.validatePassword();
     if (!validateNotNull(passwordConfirmation) || !password.equals(passwordConfirmation)) {
       validationErrors.add(new ValidationError("password_confirmation", "Les mots de passe ne correspondent pas"));
       return this;
