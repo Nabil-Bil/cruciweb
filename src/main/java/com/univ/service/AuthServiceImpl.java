@@ -1,10 +1,12 @@
 package com.univ.service;
 
+import java.util.Optional;
+
 import com.univ.model.User;
 import com.univ.repository.UserRepository;
 import com.univ.repository.UserRepositoryImpl;
-import com.univ.util.BCryptUtil;
 import com.univ.util.SessionManager;
+import com.univ.validator.AuthValidator;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,15 +19,15 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public void login(String username, String password, HttpSession session) throws Exception {
+  public AuthValidator login(User user, HttpSession session) throws Exception {
     SessionManager sessionManager = new SessionManager(session);
-    User user = userRepository.findByUsername(username)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-    Boolean isValidPassword = BCryptUtil.verifyPassword(password, user.getPassword());
-    if (!isValidPassword) {
-      throw new RuntimeException("Invalid password");
-    }
-    sessionManager.setLoggedinUser(user.getId(), user.getRole());
+    Optional<User> optionalUser = this.userRepository.findByUsername(user.getUsername());
+    AuthValidator validator = AuthValidator.forUser(user, optionalUser);
+    validator.validateUsername().validatePassword();
+    if (validator.isValid())
+      sessionManager.setLoggedinUser(optionalUser.get().getId(), optionalUser.get().getRole());
+
+    return validator;
   }
 
   @Override
