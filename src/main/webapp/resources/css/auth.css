@@ -20,10 +20,10 @@ body > div{
 }
 
 #auth-form h1 {
-  font-weight: bolder;
+  font-weight: 900;
   margin-bottom: 12px;
   align-self: center;
-  font: 4rem "Imperial Script", sans-serif;
+  font: 4rem "Poppins", sans-serif;
 }
 
 #auth-form {
