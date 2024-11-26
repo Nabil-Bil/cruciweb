@@ -4,8 +4,8 @@ import com.univ.model.User;
 import com.univ.repository.UserRepository;
 import com.univ.repository.UserRepositoryImpl;
 import com.univ.util.BCryptUtil;
+import com.univ.validator.UserValidator;
 
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
@@ -28,15 +28,19 @@ public class UserServiceImpl implements UserService {
     return userRepository.findAll();
   }
 
-  public User createUser(User user) throws Exception {
-    if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-      throw new EntityExistsException("Ce nom d'utilisateur existe déjà");
+  public UserValidator createUser(User user, String passwordConfirmation) throws Exception {
+    Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
+    UserValidator userValidator = UserValidator.forUser(user, optionalUser);
+    userValidator.validateUsername().validatePassword(passwordConfirmation);
+    if (userValidator.isValid()) {
+      String userPassword = user.getPassword();
+      String hashedPassword = BCryptUtil.hashPassword(userPassword);
+      User cloneUser = User.copyOf(user);
+      cloneUser.setPassword(hashedPassword);
+      User savecUser = userRepository.save(cloneUser);
+      user.setId(savecUser.getId());
     }
-    String userPassword = user.getPassword();
-    String hashedPassword = BCryptUtil.hashPassword(userPassword);
-    User cloneUser = User.copyOf(user);
-    cloneUser.setPassword(hashedPassword);
-    return userRepository.save(cloneUser);
+    return userValidator;
   }
 
   public User updateUser(User user) throws Exception {
