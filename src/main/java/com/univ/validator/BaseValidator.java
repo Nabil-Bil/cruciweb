@@ -1,6 +1,10 @@
 package com.univ.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BaseValidator {
+  protected ArrayList<ValidationError> validationErrors = new ArrayList<ValidationError>();
 
   protected boolean validateNotNull(Object value) {
     return value != null;
@@ -18,4 +22,19 @@ public abstract class BaseValidator {
     return value.trim().length() <= maxLength;
   }
 
+  public boolean isValid() {
+    return validationErrors.isEmpty();
+  }
+
+  public boolean isNotValid() {
+    return !this.isValid();
+  }
+
+  public boolean addError(String field, String message) {
+    return this.validationErrors.add(new ValidationError(field, message));
+  }
+
+  public List<ValidationError> getValidationErrors() {
+    return validationErrors;
+  }
 }

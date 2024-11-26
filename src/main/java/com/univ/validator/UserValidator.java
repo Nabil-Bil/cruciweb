@@ -1,36 +1,43 @@
 package com.univ.validator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import com.univ.model.User;
 
 public class UserValidator extends BaseValidator {
   private final User user;
-  private ArrayList<ValidationError> validationErrors;
+  private final Optional<User> optionalUser;
+  private final String USERNAME_FIELD = "username";
+  private final String PASSWORD_FIELD = "password";
+  private final String PASSWORD_CONFIRMATION_FIELD = "password_confirmation";
 
-  public static UserValidator forUser(User user) {
-    return new UserValidator(user);
+  public static UserValidator forUser(User user, Optional<User> optionalUser) {
+    return new UserValidator(user, optionalUser);
   }
 
-  private UserValidator(User user) {
+  private UserValidator(User user, Optional<User> optionalUser) {
+    this.optionalUser = optionalUser;
     this.user = user;
-    this.validationErrors = new ArrayList<ValidationError>();
   }
 
   public UserValidator validateUsername() {
     String username = this.user.getUsername();
     if (!validateNotNull(username) || !validateNotBlank(username)) {
-      validationErrors.add(new ValidationError("username", "Nom d'utilisateur ne peut être vide"));
+      addError(
+          USERNAME_FIELD, "Nom d'utilisateur ne peut être vide");
       return this;
     }
     if (!validateMinLength(username, 3)) {
-      validationErrors.add(new ValidationError("username", "Nom d'utilisateur doit avoir minimum 3 caractères"));
+      addError(USERNAME_FIELD, "Nom d'utilisateur doit avoir minimum 3 caractères");
       return this;
     }
     if (!validateMaxLength(username, 50)) {
-      validationErrors.add(new ValidationError("username", "Nom d'utilisateur ne pas doit pas dépasser 50 caractères"));
+      addError(
+          USERNAME_FIELD, "Nom d'utilisateur ne pas doit pas dépasser 50 caractères");
       return this;
+    }
+    if (optionalUser.isPresent()) {
+      addError(USERNAME_FIELD, "Ce nom d'utilisateur existe déja!");
     }
     return this;
   }
@@ -38,15 +45,15 @@ public class UserValidator extends BaseValidator {
   public UserValidator validatePassword() {
     String password = this.user.getPassword();
     if (!validateNotNull(password) || !validateNotBlank(password)) {
-      validationErrors.add(new ValidationError("password", "Mot de passe ne peut être vide"));
+      addError(PASSWORD_FIELD, "Mot de passe ne peut être vide");
       return this;
     }
     if (!validateMinLength(password, 8)) {
-      validationErrors.add(new ValidationError("password", "Mot de passe doit avoir minimum 8 caractères"));
+      addError(PASSWORD_FIELD, "Mot de passe doit avoir minimum 8 caractères");
       return this;
     }
     if (!validateMaxLength(password, 255)) {
-      validationErrors.add(new ValidationError("password", "Mot de passe ne pas doit pas dépasser 255 caractères"));
+      addError(PASSWORD_FIELD, "Mot de passe ne pas doit pas dépasser 255 caractères");
       return this;
     }
     return this;
@@ -56,18 +63,10 @@ public class UserValidator extends BaseValidator {
     String password = this.user.getPassword();
     this.validatePassword();
     if (!validateNotNull(passwordConfirmation) || !password.equals(passwordConfirmation)) {
-      validationErrors.add(new ValidationError("password_confirmation", "Les mots de passe ne correspondent pas"));
+      addError(PASSWORD_CONFIRMATION_FIELD, "Les mots de passe ne correspondent pas");
       return this;
     }
     return this;
-  }
-
-  public boolean isValid() {
-    return validationErrors.isEmpty();
-  }
-
-  public List<ValidationError> getValidationErrors() {
-    return validationErrors;
   }
 
 }
