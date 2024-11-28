@@ -18,15 +18,12 @@ public class CsrfProtectionFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
 
-    if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
-      HttpServletRequest req = (HttpServletRequest) request;
-      HttpServletResponse resp = (HttpServletResponse) response;
-      if (req.getMethod().equalsIgnoreCase("GET")) {
+    if (request instanceof HttpServletRequest req && response instanceof HttpServletResponse resp) {
+        if (req.getMethod().equalsIgnoreCase("GET")) {
         String csrfToken = CsrfTokenUtil.generateCsrfToken(req);
         req.setAttribute(CsrfTokenUtil.CSRF_SESSION_ATTRIBUTE, csrfToken);
       } else {
         String csrfToken = req.getParameter(CsrfTokenUtil.CSRF_SESSION_ATTRIBUTE);
-
         if (!CsrfTokenUtil.validateCsrfToken(req, csrfToken)) {
           resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid CSRF Token");
           return;

@@ -1,6 +1,9 @@
 package com.univ.util;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -12,21 +15,37 @@ public class CsrfTokenUtil {
     String csrfToken = UUID.randomUUID().toString();
 
     HttpSession session = request.getSession(true);
-    session.setAttribute(CSRF_SESSION_ATTRIBUTE, csrfToken);
+    Set<String> csrfTokens = getCsrfTokensFromSession(session);
+
+    csrfTokens.add(csrfToken);
+    session.setAttribute(CSRF_SESSION_ATTRIBUTE, csrfTokens);
 
     return csrfToken;
   }
 
-  public static String getCsrfTokenFromSession(HttpServletRequest request) {
-    HttpSession session = request.getSession(false);
-    if (session == null) {
-      return null;
+  @SuppressWarnings("unchecked")
+  private static Set<String> getCsrfTokensFromSession(HttpSession session) {
+    Set<String> csrfTokens = (Set<String>) session.getAttribute(CSRF_SESSION_ATTRIBUTE);
+    if (csrfTokens == null) {
+      csrfTokens = new HashSet<>();
     }
-    return (String) session.getAttribute(CSRF_SESSION_ATTRIBUTE);
+    return csrfTokens;
   }
 
   public static boolean validateCsrfToken(HttpServletRequest request, String csrfToken) {
-    String storedToken = getCsrfTokenFromSession(request);
-    return storedToken != null && storedToken.equals(csrfToken);
+    HttpSession session = request.getSession(false);
+    if (session == null || csrfToken == null) {
+      return false;
+    }
+
+    Set<String> csrfTokens = getCsrfTokensFromSession(session);
+
+    if (csrfTokens.contains(csrfToken)) {
+      csrfTokens.remove(csrfToken);
+      session.setAttribute(CSRF_SESSION_ATTRIBUTE, csrfTokens);
+      return true;
+    }
+
+    return false;
   }
 }
