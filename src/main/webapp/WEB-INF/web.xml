@@ -36,7 +36,10 @@
       </filter>
       <filter-mapping>
             <filter-name>CsrfProtectionFilter</filter-name>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/login</url-pattern>
+            <url-pattern>/register</url-pattern>
+            <url-pattern>/</url-pattern>
+            <url-pattern>/dashboard</url-pattern>
       </filter-mapping>
 
       <filter>
@@ -51,6 +54,18 @@
             <url-pattern>/logout</url-pattern>
       </filter-mapping>
 
+      <error-page>
+            <error-code>404</error-code>
+            <location>/WEB-INF/views/errors/404.jsp</location>
+      </error-page>
+<!--      <error-page>-->
+<!--            <error-code>403</error-code>-->
+<!--            <location>/WEB-INF/views/errors/403.jsp</location>-->
+<!--      </error-page>-->
+      <!-- <error-page>
+            <error-code>500</error-code>
+            <location>/WEB-INF/views/errors/500.jsp</location>
+      </error-page> -->
       <session-config>
             <session-timeout>60</session-timeout>
       </session-config>
