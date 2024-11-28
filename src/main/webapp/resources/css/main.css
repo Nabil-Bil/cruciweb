@@ -33,10 +33,10 @@ a#logo {
   gap: 12px;
   align-items: center;
 }
-#topbar input, #topbar ul li{
+#topbar ul li input, #topbar ul li{
   font-weight: 600;
   color: white;
-  font-size: larger;
+  font-size: 18px;
 }
 input[type="text"],
 input[type="password"] {

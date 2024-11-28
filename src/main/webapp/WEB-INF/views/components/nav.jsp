@@ -3,6 +3,7 @@
 <%
   SessionManager sessionManager=new SessionManager(request.getSession(false));
   boolean isLoggedIn = sessionManager.isLoggedIn();
+  boolean isAdmin = sessionManager.isAdmin();
 %>
 <nav id="topbar">
   <a href="${pageContext.request.contextPath}/" id="logo">
@@ -11,6 +12,9 @@
   </a>
   <ul>
     <li><a href="${pageContext.request.contextPath}/">Acceuil</a></li>
+    <% if(isAdmin) { %>
+    <li><a href="${pageContext.request.contextPath}/users">Utilisateurs</a></li>
+    <% } %>
     <% if(isLoggedIn) { %>
     <li>
       <form action="${pageContext.request.contextPath}/logout" method="post">
