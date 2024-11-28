@@ -7,9 +7,10 @@
   <title>Cruciweb - Dashboard</title>
 </head>
 <body>
+
   <jsp:include page="components/nav.jsp"/>
   <div class="center-content">
-    You Are LoggedIn 🎉
+    You Are LoggedIn  🎉
 
   </div>
 </body>
