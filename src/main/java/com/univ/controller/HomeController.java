@@ -16,6 +16,12 @@ public class HomeController extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    ViewResolver.resolve(req, "index.jsp").forward(req, resp);
+    String requestUri = req.getRequestURI().replaceAll("/$", "");
+    String expectedUri = req.getContextPath();
+    if (!requestUri.equals(expectedUri)) {
+      resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+    } else {
+      ViewResolver.resolve(req, "home.jsp").forward(req, resp);
+    }
   }
 }
