@@ -29,7 +29,14 @@
             <filter-name>ContentTypeFilter</filter-name>
             <url-pattern>/*</url-pattern>
       </filter-mapping>
-
+      <filter>
+            <filter-name>HttpMethodOverrideFilter</filter-name>
+            <filter-class>com.univ.filter.HttpMethodOverrideFilter</filter-class>
+      </filter>
+      <filter-mapping>
+            <filter-name>HttpMethodOverrideFilter</filter-name>
+            <url-pattern>/*</url-pattern>
+      </filter-mapping>
       <filter>
             <filter-name>CsrfProtectionFilter</filter-name>
             <filter-class>com.univ.filter.CsrfProtectionFilter</filter-class>
@@ -40,6 +47,7 @@
             <url-pattern>/register</url-pattern>
             <url-pattern>/</url-pattern>
             <url-pattern>/dashboard</url-pattern>
+            <url-pattern>/users</url-pattern>
       </filter-mapping>
 
       <filter>
@@ -52,11 +60,24 @@
             <url-pattern>/register</url-pattern>
             <url-pattern>/dashboard</url-pattern>
             <url-pattern>/logout</url-pattern>
+            <url-pattern>/users</url-pattern>
+      </filter-mapping>
+      <filter>
+            <filter-name>AdminFilter</filter-name>
+            <filter-class>com.univ.filter.AdminFilter</filter-class>
+      </filter>
+      <filter-mapping>
+            <filter-name>AdminFilter</filter-name>
+            <url-pattern>/users</url-pattern>
       </filter-mapping>
 
       <error-page>
             <error-code>404</error-code>
             <location>/WEB-INF/views/errors/404.jsp</location>
+      </error-page>
+      <error-page>
+            <error-code>401</error-code>
+            <location>/WEB-INF/views/errors/401.jsp</location>
       </error-page>
 <!--      <error-page>-->
 <!--            <error-code>403</error-code>-->
