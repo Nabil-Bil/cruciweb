@@ -1,0 +1,16 @@
+@import url(fonts.css);
+body{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #272528;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 32px;
+  gap: 25px;
+  color: white;
+  flex-direction: column;
+  overflow: hidden;
+}
