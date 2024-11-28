@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     return userRepository.findById(id);
   }
 
-  public List<User> getAllUsers() throws Exception {
+  public List<User> getUserList() throws Exception {
     return userRepository.findAll();
   }
 

@@ -1,5 +1,6 @@
 package com.univ.util;
 
+import com.univ.enums.Role;
 import jakarta.servlet.http.HttpSession;
 
 public final class SessionManager {
@@ -16,6 +17,9 @@ public final class SessionManager {
         return session != null && session.getAttribute(SESSION_USER_ID_KEY) != null;
     }
 
+    public boolean isAdmin() {
+        return isLoggedIn() && session != null && session.getAttribute(SESSION_ROLE_KEY) != null && session.getAttribute(SESSION_ROLE_KEY).equals(Role.ADMIN);
+    }
     public Object getLoggedInUserId() {
         if (session == null)
             return null;

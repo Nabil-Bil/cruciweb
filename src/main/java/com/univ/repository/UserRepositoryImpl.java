@@ -45,11 +45,13 @@ public class UserRepositoryImpl implements UserRepository {
   public void deleteById(UUID id) throws Exception {
     EntityManager eManager = this.entityManagerFactory.createEntityManager();
     try {
-      eManager.getTransaction().begin();
+      EntityTransaction entityTransaction = eManager.getTransaction();
+      entityTransaction.begin();
       User user = eManager.find(User.class, id);
-      if (user != null) {
-        eManager.remove(eManager);
-        eManager.getTransaction().commit();
+      Optional<User> optionalUser = Optional.ofNullable(user);
+      if (optionalUser.isPresent()) {
+        eManager.remove(user);
+        entityTransaction.commit();
         return;
       }
       throw new EntityNotFoundException("Utilisateur non trouvé");
@@ -57,6 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
     } catch (Exception e) {
       if (eManager.getTransaction().isActive())
         eManager.getTransaction().rollback();
+      throw e;
     } finally {
       eManager.close();
     }

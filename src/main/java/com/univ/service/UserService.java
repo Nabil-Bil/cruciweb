@@ -1,5 +1,6 @@
 package com.univ.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ public interface UserService {
 
   public User updateUser(User user) throws Exception;
 
+  public List<User> getUserList() throws Exception;
+  
   public void deleteUser(UUID id) throws Exception;
 
 }
