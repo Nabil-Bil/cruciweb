@@ -11,7 +11,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cruciweb - Users</title>
+  <title>Cruciweb - Utilisateurs</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/users.css"/>
 </head>
 <body>
@@ -24,7 +24,6 @@
   <table>
     <thead>
     <tr>
-      <th>ID</th>
       <th>Nom d'utilisateur</th>
       <th>Rôle</th>
       <th>Created At</th>
@@ -39,7 +38,6 @@
           if(user.getRole()!= Role.ADMIN){
     %>
     <tr>
-      <td><%=user.getId()%></td>
       <td><%=user.getUsername()%></td>
       <td><%=user.getRole().name().toLowerCase()%></td>
       <td><%= sdf.format(user.getCreatedAt())%></td>
