@@ -4,6 +4,13 @@
   version="3.0">
   <persistence-unit name="default">
     <class>com.univ.model.User</class>
+    <class>com.univ.model.User</class>
+    <class>com.univ.model.GridRow</class>
+    <class>com.univ.model.Hint</class>
+    <class>com.univ.model.Cell</class>
+    <class>com.univ.model.Grid</class>
+    <class>com.univ.model.Game</class>
+
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
       <property name="jakarta.persistence.jdbc.url"
