@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -75,6 +77,14 @@ public class Hint {
         this.index = index;
     }
 
+    public Grid getGrid() {
+        return grid;
+    }
+
+    //get all hints in single string separated by -
+    public List<String> getHintsString() {
+        return Arrays.stream(this.value.trim().split("-")).toList();
+    }
 
     @Override
     public boolean equals(Object o) {

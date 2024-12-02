@@ -2,13 +2,11 @@ package com.univ.model;
 
 import com.univ.enums.GameDifficulty;
 import com.univ.model.embeddables.Dimension;
+import com.univ.util.Position;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "grids")
@@ -21,8 +19,8 @@ public class Grid {
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "grid", cascade = CascadeType.ALL, targetEntity = Cell.class)
-    private List<Cell> cells;
+    @Column(nullable = false, updatable = false, length = 1024, name = "grid_representation")
+    private String gridRepresentation;
 
     @Column(nullable = false, length = 50, updatable = false)
     @Enumerated(EnumType.STRING)
@@ -30,6 +28,10 @@ public class Grid {
     private GameDifficulty difficulty;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "width", column = @Column(nullable = false)),
+            @AttributeOverride(name = "height", column = @Column(nullable = false))
+    })
     private Dimension dimensions;
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
@@ -45,6 +47,11 @@ public class Grid {
     @Column(nullable = true, name = "updated_at", updatable = true)
     private Date updatedAt;
 
+    @Transient
+    private char[][] matrixRepresentation;
+
+    @Transient
+    private List<Position> blackCells;
 
     public Grid() {
     }
@@ -57,6 +64,49 @@ public class Grid {
         this.createdAt = new Date();
     }
 
+    public Grid(String name, GameDifficulty difficulty, Dimension dimensions, User createdBy, String gridRepresentation) {
+        this.name = name;
+        this.difficulty = difficulty;
+        this.dimensions = dimensions;
+        this.createdBy = createdBy;
+        this.gridRepresentation = gridRepresentation;
+        this.matrixRepresentation = convertTextToMatrix(gridRepresentation);
+        this.blackCells = getBlackCellsPositions();
+        this.createdAt = new Date();
+    }
+
+    public static char[][] convertTextToMatrix(String gridText) {
+        String[] rows = gridText.split("\n");
+        char[][] matrix = new char[rows.length][];
+
+        for (int i = 0; i < rows.length; i++) {
+            matrix[i] = rows[i].toCharArray();
+        }
+
+        return matrix;
+    }
+
+    public static String convertMatrixToText(char[][] matrix) {
+        StringBuilder gridText = new StringBuilder();
+
+        for (char[] row : matrix) {
+            for (char cell : row) {
+                gridText.append(cell).append(" ");
+            }
+            gridText.setLength(gridText.length() - 1);
+            gridText.append("\n");
+        }
+
+        return gridText.toString().trim();
+    }
+
+    @PostLoad
+    private void initializeTransientFields() {
+        if (this.gridRepresentation != null) {
+            this.matrixRepresentation = convertTextToMatrix(this.gridRepresentation);
+            this.blackCells = getBlackCellsPositions();
+        }
+    }
 
     public UUID getId() {
         return id;
@@ -74,13 +124,14 @@ public class Grid {
         this.name = name;
     }
 
-
-    public List<Cell> getCells() {
-        return cells;
+    public String getGridRepresentation() {
+        return gridRepresentation;
     }
 
-    public void setCells(List<Cell> cells) {
-        this.cells = cells;
+    public void setGridRepresentation(String gridRepresentation) {
+        this.gridRepresentation = gridRepresentation;
+        this.matrixRepresentation = convertTextToMatrix(gridRepresentation);
+        this.blackCells = getBlackCellsPositions();
     }
 
     public GameDifficulty getDifficulty() {
@@ -123,6 +174,14 @@ public class Grid {
         return hints;
     }
 
+    public char[][] getMatrixRepresentation() {
+        return matrixRepresentation;
+    }
+
+    public List<Position> getBlackCells() {
+        return blackCells;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -134,5 +193,18 @@ public class Grid {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    private List<Position> getBlackCellsPositions() {
+
+        List<Position> blackCellsPositions = new ArrayList<Position>();
+        for (int row = 0; row < this.matrixRepresentation.length; row++) {
+            for (int col = 0; col < this.matrixRepresentation[row].length; col++) {
+                if (this.matrixRepresentation[row][col] == '*') {
+                    blackCellsPositions.add(new Position(row, col));
+                }
+            }
+        }
+        return blackCellsPositions;
     }
 }

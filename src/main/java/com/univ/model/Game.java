@@ -2,7 +2,6 @@ package com.univ.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,8 +15,8 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, targetEntity = GridRow.class)
-    private List<GridRow> gridRows;
+    @Column(nullable = false, updatable = false, length = 1024, name = "grid_representation")
+    private String gridRepresentation;
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_game_user"), referencedColumnName = "id")
@@ -47,8 +46,12 @@ public class Game {
         isSolved = solved;
     }
 
-    public List<GridRow> getRows() {
-        return gridRows;
+    public String getGridRepresentation() {
+        return gridRepresentation;
+    }
+
+    public void setGridRepresentation(String gridRepresentation) {
+        this.gridRepresentation = gridRepresentation;
     }
 
     public User getPlayedBy() {

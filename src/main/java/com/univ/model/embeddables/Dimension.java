@@ -22,15 +22,20 @@ public class Dimension {
         return height;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
     public void setHeight(int height) {
         this.height = height;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%dX%d", width, height);
     }
 }

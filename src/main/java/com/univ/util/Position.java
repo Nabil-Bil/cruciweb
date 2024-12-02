@@ -1,14 +1,8 @@
-package com.univ.model.embeddables;
+package com.univ.util;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-
-@Embeddable
 public class Position {
-    @Column(name = "`row`", nullable = false, updatable = false)
-    private int row;
 
-    @Column(name = "`column`", nullable = false, updatable = false)
+    private int row;
     private int column;
 
     public Position() {
