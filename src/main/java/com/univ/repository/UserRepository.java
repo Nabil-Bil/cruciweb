@@ -8,13 +8,13 @@ import java.util.UUID;
 
 public interface UserRepository {
 
-    User save(User user);
+    User save(User user) throws Exception;
 
-    Optional<User> findById(UUID id);
+    Optional<User> findById(UUID id) throws Exception;
 
-    List<User> findAll();
+    List<User> findAll() throws Exception;
 
-    void deleteById(UUID id);
+    void deleteById(UUID id) throws Exception;
 
-    Optional<User> findByUsername(String username);
+    Optional<User> findByUsername(String username) throws Exception;
 }

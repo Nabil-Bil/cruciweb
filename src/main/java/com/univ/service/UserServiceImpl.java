@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     public UserValidator createUser(User user, String passwordConfirmation) throws Exception {
         Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
-        UserValidator userValidator = UserValidator.forUser(user, optionalUser);
+        UserValidator userValidator = UserValidator.of(user, optionalUser);
         userValidator.validateUsername().validatePassword(passwordConfirmation);
 
         if (userValidator.isValid()) {
