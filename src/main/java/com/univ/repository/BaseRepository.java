@@ -15,7 +15,7 @@ public abstract class BaseRepository<T> {
         return EntityManagerProvider.instance().getEntityManagerFactory().createEntityManager();
     }
 
-    public T executeInTransaction(TransactionAction<T> action) {
+    public T executeInTransaction(TransactionAction<T> action) throws Exception {
         this.entityManager = this.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -27,13 +27,13 @@ public abstract class BaseRepository<T> {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Transaction failed", e);
+            throw new Exception("Transaction failed", e);
         } finally {
             entityManager.close();
         }
     }
 
-    public T save(T entity) {
+    public T save(T entity) throws Exception {
         return executeInTransaction(() -> {
             entityManager.persist(entity);
             return entity;
@@ -41,29 +41,38 @@ public abstract class BaseRepository<T> {
 
     }
 
-    public T update(T entity) {
+    public T update(T entity) throws Exception {
         return executeInTransaction(() -> {
             return entityManager.merge(entity);
         });
     }
 
-    public Optional<T> findById(Class<T> clazz, UUID id) {
-        this.entityManager = this.createEntityManager();
-        Optional<T> entity = Optional.ofNullable(entityManager.find(clazz, id));
-        entityManager.close();
-        return entity;
+    public Optional<T> findById(Class<T> clazz, UUID id) throws Exception {
+        try {
+            this.entityManager = this.createEntityManager();
+            Optional<T> entity = Optional.ofNullable(entityManager.find(clazz, id));
+            entityManager.close();
+            return entity;
+        } catch (Exception e) {
+            throw new Exception("Entity not found", e);
+        }
     }
 
 
-    public List<T> findAll(Class<T> clazz) {
-        this.entityManager = this.createEntityManager();
-        List<T> entities = entityManager.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e", clazz)
-                .getResultList();
-        entityManager.close();
-        return entities;
+    public List<T> findAll(Class<T> clazz) throws Exception {
+        try {
+            this.entityManager = this.createEntityManager();
+            List<T> entities = entityManager.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e", clazz)
+                    .getResultList();
+            entityManager.close();
+            return entities;
+        } catch (Exception e) {
+            throw new Exception("Entities not found", e);
+        }
+
     }
 
-    public void deleteById(Class<T> clazz, UUID id) {
+    public void deleteById(Class<T> clazz, UUID id) throws Exception {
         executeInTransaction(() -> {
             T entity = entityManager.find(clazz, id);
             if (entity != null) {
