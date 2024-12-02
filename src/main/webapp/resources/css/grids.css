@@ -1,0 +1,72 @@
+@import "main.css";
+
+.container {
+    padding: 25px 100px;
+
+}
+
+h1 {
+    margin: 25px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.grid-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 25px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: none;
+    cursor: pointer;
+    width: 250px;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.25);
+}
+
+.card .card-header {
+    width: 250px;
+}
+
+.card .card-content {
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+    align-items: start;
+    align-self: flex-start;
+}
+
+.card .card-content .title,
+.card .card-content p {
+    padding-left: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card * {
+    width: 100%;
+}
+
+.card-footer p {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
