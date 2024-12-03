@@ -18,8 +18,9 @@ public final class SessionManager {
     }
 
     public boolean isAdmin() {
-        return isLoggedIn() && session != null && session.getAttribute(SESSION_ROLE_KEY) != null && session.getAttribute(SESSION_ROLE_KEY).equals(Role.ADMIN);
+        return isLoggedIn() && session.getAttribute(SESSION_ROLE_KEY) != null && session.getAttribute(SESSION_ROLE_KEY).equals(Role.ADMIN);
     }
+
     public Object getLoggedInUserId() {
         if (session == null)
             return null;
