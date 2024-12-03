@@ -1,159 +1,193 @@
 @import url(fonts.css);
 @import url(reset.css);
+
 body {
-  font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
     background-color: #000;
     color: #fff;
 }
 
 a#logo {
-  font-family: "Imperial Script";
-  display: flex;
-  align-items: center;
-  font-size: 3rem;
-  gap: 25px;
+    font-family: "Imperial Script";
+    display: flex;
+    align-items: center;
+    font-size: 3rem;
+    gap: 25px;
 }
+
 #logo-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
-  border-width: 2px;
-  border-color: white;
-  border-style: dashed;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border-width: 2px;
+    border-color: white;
+    border-style: dashed;
 }
+
 #topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 50px;
 }
+
 #topbar ul {
-  display: flex;
-  width: max-content;
-  gap: 12px;
-  align-items: center;
+    display: flex;
+    width: max-content;
+    gap: 12px;
+    align-items: center;
 }
-#topbar ul li input, #topbar ul li{
-  font-weight: 600;
-  color: white;
-  font-size: 18px;
+
+#topbar ul li input, #topbar ul li {
+    font-weight: 600;
+    color: white;
+    font-size: 18px;
 }
+
 input[type="text"],
 input[type="password"] {
-  padding: 12px 8px;
-  border: 1px solid #ccc;
-  background-color: black;
-  border-radius: 4px;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  caret-color: white;
-  color: white;
+    padding: 12px 8px;
+    border: 1px solid #ccc;
+    background-color: black;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    caret-color: white;
+    color: white;
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-  border-color: white;
-  outline: none;
-  box-shadow: white;
+    border-color: white;
+    outline: none;
+    box-shadow: white;
 }
 
 .transition-all {
-  transition: all;
+    transition: all;
 }
 
 .duration-100 {
-  transition-duration: 100ms;
+    transition-duration: 100ms;
 }
 
 .duration-150 {
-  transition-duration: 150ms;
+    transition-duration: 150ms;
 }
 
 .duration-300 {
-  transition-duration: 300ms;
+    transition-duration: 300ms;
 }
 
 .duration-500 {
-  transition-duration: 500ms;
+    transition-duration: 500ms;
 }
 
 .duration-700 {
-  transition-duration: 700ms;
+    transition-duration: 700ms;
 }
 
 .duration-1000 {
-  transition-duration: 1000ms;
+    transition-duration: 1000ms;
 }
 
 .button {
-  padding: 12px 8px;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  background-color: white;
-  color: black;
-  cursor: pointer;
-  max-width: 50%;
+    padding: 12px 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    max-width: 50%;
 }
 
 .button:hover {
-  transition: all 0.3s;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.25);
+    transition: all 0.3s;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.25);
 }
 
 .error {
-  color: red;
-  font-size: 0.8rem;
+    color: red;
+    font-size: 0.8rem;
 }
 
 input.error-input {
-  border: 1px solid red;
+    border: 1px solid red;
 }
+
 .card {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 12px;
-  border-radius: 12px;
-  width: 600px;
-  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 12px;
+    border-radius: 12px;
+    width: 600px;
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.25);
 }
 
 .center-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
-.hidden{
-  display: none;
+
+.hidden {
+    display: none;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes highlight {
-  from {
-    background: #fff;
-    color: #000;
-  }
+    from {
+        background: #fff;
+        color: #000;
+    }
 
-  to {
-    background: #333;
-    color: #fff;
-  }
+    to {
+        background: #333;
+        color: #fff;
+    }
+}
+
+.page-link {
+    color: white;
+    text-decoration: none;
+    padding: 12px 12px;
+    background: black;
+    border: white 1px solid;
+    border-radius: 4px;
+}
+
+.active-link {
+    background: white;
+    color: black;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-link:hover {
+    background: white;
+    color: black;
 }
