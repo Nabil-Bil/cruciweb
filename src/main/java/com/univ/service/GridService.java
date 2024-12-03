@@ -5,6 +5,7 @@ import com.univ.model.Hint;
 import com.univ.validator.GridValidator;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,7 +14,8 @@ public interface GridService {
 
     void deleteGrid(UUID id) throws Exception;
 
-    List<Grid> getGridList() throws Exception;
+    Map<String, Object> getGridList(int page, int pageSize) throws Exception;
 
     Optional<Grid> getGridById(UUID id) throws Exception;
+
 }

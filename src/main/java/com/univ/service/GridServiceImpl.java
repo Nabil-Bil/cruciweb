@@ -7,9 +7,7 @@ import com.univ.repository.GridRepositoryImpl;
 import com.univ.validator.GridValidator;
 import jakarta.servlet.http.HttpSession;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class GridServiceImpl implements GridService {
     GridRepository gridRepository;
@@ -31,12 +29,30 @@ public class GridServiceImpl implements GridService {
     }
 
     @Override
-    public List<Grid> getGridList() throws Exception {
-        return gridRepository.findAll();
+    public Map<String, Object> getGridList(int page, int pageSize) throws Exception {
+        List<Grid> allGrids = gridRepository.findAll();
+        if (allGrids == null || allGrids.isEmpty()) {
+            return Map.of("gridList", new ArrayList<>(), "numberOfPages", 0);
+        }
+        int totalGrids = allGrids.size();
+
+        int totalPages = (int) Math.ceil((double) totalGrids / pageSize);
+
+        if (page < 1) {
+            page = 1;
+        } else if (page > totalPages) {
+            page = totalPages;
+        }
+
+        int fromIndex = (page - 1) * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, totalGrids);
+        Map<String, Object> map = Map.of("gridList", allGrids, "numberOfPages", totalPages);
+        return map;
     }
 
     @Override
     public Optional<Grid> getGridById(UUID id) throws Exception {
         return null;
     }
+
 }
