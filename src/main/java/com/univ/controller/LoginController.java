@@ -4,6 +4,7 @@ import com.univ.model.User;
 import com.univ.service.AuthService;
 import com.univ.service.AuthServiceImpl;
 import com.univ.util.Routes;
+import com.univ.util.SessionManager;
 import com.univ.util.ViewResolver;
 import com.univ.validator.AuthValidator;
 import com.univ.validator.ValidationError;
@@ -37,17 +38,24 @@ public class LoginController extends HttpServlet {
             AuthService authService = new AuthServiceImpl();
             HttpSession httpSession = req.getSession(true);
             AuthValidator authValidator = authService.login(user, httpSession);
+            SessionManager sessionManager = new SessionManager(httpSession);
             if (authValidator.isNotValid()) {
                 ValidationError validationError = authValidator.getValidationErrors().get(0);
                 req.setAttribute(validationError.getErrorField(),
                         validationError.getMessage());
+
                 ViewResolver.resolve(req, "auth/login.jsp").forward(req, resp);
             } else {
-                resp.sendRedirect(req.getContextPath() + Routes.DASHBOARD_ROUTE);
+                if (sessionManager.isAdmin()) {
+                    resp.sendRedirect(req.getContextPath() + Routes.USERS_ROUTE);
+                } else {
+                    resp.sendRedirect(req.getContextPath() + Routes.GRID_ROUTE);
+                }
             }
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
         }
     }
+
 }

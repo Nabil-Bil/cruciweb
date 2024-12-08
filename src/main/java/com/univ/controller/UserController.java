@@ -20,7 +20,7 @@ public class UserController extends HttpServlet {
         UserService userService = new UserServiceImpl();
         try {
             req.setAttribute("users", userService.getUserList());
-            ViewResolver.resolve(req, "users.jsp").forward(req, resp);
+            ViewResolver.resolve(req, "users/users.jsp").forward(req, resp);
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

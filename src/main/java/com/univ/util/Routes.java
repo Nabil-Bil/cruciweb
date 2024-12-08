@@ -8,6 +8,8 @@ public class Routes {
     public static final String DASHBOARD_ROUTE = "/dashboard";
     public static final String USERS_ROUTE = "/users";
     public static final String GRID_ROUTE = "/grids";
+    public static final String CREATE_USER_ROUTE = "/users/create";
+    public static final String CREATE_GRID_ROUTE = "/grids/create";
 
     private Routes() {
         throw new UnsupportedOperationException("Routes class cannot be instantiated");

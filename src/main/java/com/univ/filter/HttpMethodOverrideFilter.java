@@ -1,13 +1,9 @@
 package com.univ.filter;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+
 import java.io.IOException;
 
 public class HttpMethodOverrideFilter implements Filter {
@@ -19,6 +15,7 @@ public class HttpMethodOverrideFilter implements Filter {
         if (request instanceof HttpServletRequest httpRequest) {
 
             if ("POST".equalsIgnoreCase(httpRequest.getMethod()) && httpRequest.getParameter("_method") != null) {
+                System.out.println("Method Override Filter");
                 String methodOverride = httpRequest.getParameter("_method").toUpperCase();
                 chain.doFilter(new HttpMethodOverrideRequestWrapper(httpRequest, methodOverride), response);
                 return;
