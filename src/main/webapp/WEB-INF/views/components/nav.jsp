@@ -1,5 +1,6 @@
 <%@ page import="com.univ.util.SessionManager" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
+<%@ page import="com.univ.util.Routes" %>
 <%
     SessionManager sessionManager = new SessionManager(request.getSession(false));
     boolean isLoggedIn = sessionManager.isLoggedIn();
@@ -11,14 +12,14 @@
         <h1>CruciWeb</h1>
     </a>
     <ul>
-        <li><a href="${pageContext.request.contextPath}/">Acceuil</a></li>
-        <li><a href="${pageContext.request.contextPath}/grids">Grilles</a></li>
+        <li><a href="<%=request.getContextPath()%>/">Acceuil</a></li>
+        <li><a href="<%=request.getContextPath().concat(Routes.GRID_ROUTE)%>">Grilles</a></li>
         <% if (isAdmin) { %>
-        <li><a href="${pageContext.request.contextPath}/users">Utilisateurs</a></li>
+        <li><a href="<%=request.getContextPath().concat(Routes.USERS_ROUTE)%>">Utilisateurs</a></li>
         <% } %>
         <% if (isLoggedIn) { %>
         <li>
-            <form action="${pageContext.request.contextPath}/logout" method="post">
+            <form action="<%=request.getContextPath().concat(Routes.LOGOUT_ROUTE)%>" method="post">
                 <input type="submit" value="Se deconnecter">
                 <input type="hidden" name="csrfToken" value="${csrfToken}"/>
             </form>

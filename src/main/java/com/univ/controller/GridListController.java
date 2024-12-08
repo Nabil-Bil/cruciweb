@@ -47,7 +47,7 @@ public class GridListController extends HttpServlet {
             req.setAttribute("gridList", gridList);
             req.setAttribute("page", page);
             req.setAttribute("numberOfPages", numberOfPages);
-            ViewResolver.resolve(req, "grid/gridList.jsp").forward(req, resp);
+            ViewResolver.resolve(req, "grids/gridList.jsp").forward(req, resp);
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }

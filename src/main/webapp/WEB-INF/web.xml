@@ -1,93 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd"
-      version="6.1">
-      <display-name>CruciWeb</display-name>
-      <jsp-config>
-            <jsp-property-group>
-                  <url-pattern>*.jsp</url-pattern>
-                  <page-encoding>UTF-8</page-encoding>
-            </jsp-property-group>
-      </jsp-config>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd"
+         version="6.1">
+    <display-name>CruciWeb</display-name>
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 
-      <servlet>
-            <servlet-name>DefaultServlet</servlet-name>
-            <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
-      </servlet>
+    <servlet>
+        <servlet-name>DefaultServlet</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+    </servlet>
 
-      <servlet-mapping>
-            <servlet-name>DefaultServlet</servlet-name>
-            <url-pattern>/resources/*</url-pattern>
-      </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DefaultServlet</servlet-name>
+        <url-pattern>/resources/*</url-pattern>
+    </servlet-mapping>
 
-      <filter>
-            <filter-name>ContentTypeFilter</filter-name>
-            <filter-class>com.univ.filter.ContentTypeFilter</filter-class>
-      </filter>
-      <filter-mapping>
-            <filter-name>ContentTypeFilter</filter-name>
-            <url-pattern>/*</url-pattern>
-      </filter-mapping>
-      <filter>
-            <filter-name>HttpMethodOverrideFilter</filter-name>
-            <filter-class>com.univ.filter.HttpMethodOverrideFilter</filter-class>
-      </filter>
-      <filter-mapping>
-            <filter-name>HttpMethodOverrideFilter</filter-name>
-            <url-pattern>/*</url-pattern>
-      </filter-mapping>
-      <filter>
-            <filter-name>CsrfProtectionFilter</filter-name>
-            <filter-class>com.univ.filter.CsrfProtectionFilter</filter-class>
-      </filter>
-      <filter-mapping>
-            <filter-name>CsrfProtectionFilter</filter-name>
-            <url-pattern>/login</url-pattern>
-            <url-pattern>/register</url-pattern>
-            <url-pattern>/</url-pattern>
-            <url-pattern>/dashboard</url-pattern>
-            <url-pattern>/users</url-pattern>
-      </filter-mapping>
+    <filter>
+        <filter-name>ContentTypeFilter</filter-name>
+        <filter-class>com.univ.filter.ContentTypeFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ContentTypeFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>HttpMethodOverrideFilter</filter-name>
+        <filter-class>com.univ.filter.HttpMethodOverrideFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HttpMethodOverrideFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>CsrfProtectionFilter</filter-name>
+        <filter-class>com.univ.filter.CsrfProtectionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CsrfProtectionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-      <filter>
-            <filter-name>AuthFilter</filter-name>
-            <filter-class>com.univ.filter.AuthFilter</filter-class>
-      </filter>
-      <filter-mapping>
-            <filter-name>AuthFilter</filter-name>
-            <url-pattern>/login</url-pattern>
-            <url-pattern>/register</url-pattern>
-            <url-pattern>/dashboard</url-pattern>
-            <url-pattern>/logout</url-pattern>
-            <url-pattern>/users</url-pattern>
-      </filter-mapping>
-      <filter>
-            <filter-name>AdminFilter</filter-name>
-            <filter-class>com.univ.filter.AdminFilter</filter-class>
-      </filter>
-      <filter-mapping>
-            <filter-name>AdminFilter</filter-name>
-            <url-pattern>/users</url-pattern>
-      </filter-mapping>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.univ.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/login</url-pattern>
+        <url-pattern>/register</url-pattern>
+        <url-pattern>/dashboard</url-pattern>
+        <url-pattern>/logout</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>com.univ.filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/users</url-pattern>
+        <url-pattern>/users/create</url-pattern>
+    </filter-mapping>
 
-      <error-page>
-            <error-code>404</error-code>
-            <location>/WEB-INF/views/errors/404.jsp</location>
-      </error-page>
-      <error-page>
-            <error-code>401</error-code>
-            <location>/WEB-INF/views/errors/401.jsp</location>
-      </error-page>
-<!--      <error-page>-->
-<!--            <error-code>403</error-code>-->
-<!--            <location>/WEB-INF/views/errors/403.jsp</location>-->
-<!--      </error-page>-->
-      <!-- <error-page>
-            <error-code>500</error-code>
-            <location>/WEB-INF/views/errors/500.jsp</location>
-      </error-page> -->
-      <session-config>
-            <session-timeout>60</session-timeout>
-      </session-config>
+    <filter>
+        <filter-name>UserOnlyFilter</filter-name>
+        <filter-class>com.univ.filter.UserOnlyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserOnlyFilter</filter-name>
+        <url-pattern>/grids/create</url-pattern>
+    </filter-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/errors/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/views/errors/401.jsp</location>
+    </error-page>
+    <!--      <error-page>-->
+    <!--            <error-code>403</error-code>-->
+    <!--            <location>/WEB-INF/views/errors/403.jsp</location>-->
+    <!--      </error-page>-->
+    <!-- <error-page>
+          <error-code>500</error-code>
+          <location>/WEB-INF/views/errors/500.jsp</location>
+    </error-page> -->
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
 </web-app>
