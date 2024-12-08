@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.univ.util.DateFormatter" %>
 <%@ page import="com.univ.util.SessionManager" %>
+<%@ page import="com.univ.util.Routes" %>
 <%
     Object gridListAttr = request.getAttribute("gridList");
     List<Grid> gridList;
@@ -17,7 +18,7 @@
     int currentPage = (int) request.getAttribute("page");
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +33,7 @@
         <p>Liste des Grilles</p>
         <div>
             <% if (sessionManager.isLoggedIn() && !sessionManager.isAdmin()) { %>
-            <button class="button">Create</button>
+            <a class="button" href="<%=request.getContextPath().concat(Routes.CREATE_GRID_ROUTE)%>">Create</a>
             <% } %>
             <div class="button filter-button clicked-filter-button">Filtrer par
                 <img src="${pageContext.request.contextPath}/resources/assets/icons/arrow_drop_down.svg" alt="icon">
