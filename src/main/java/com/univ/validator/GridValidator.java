@@ -1,11 +1,10 @@
 package com.univ.validator;
 
 import com.univ.enums.Direction;
+import com.univ.model.Clue;
 import com.univ.model.Grid;
-import com.univ.model.Hint;
 import com.univ.model.embeddables.Dimension;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GridValidator extends BaseValidator {
@@ -14,15 +13,13 @@ public class GridValidator extends BaseValidator {
     private final String GRID = "grid";
 
     Grid grid;
-    List<Hint> hints;
 
-    private GridValidator(Grid grid, List<Hint> hints) {
+    private GridValidator(Grid grid) {
         this.grid = grid;
-        this.hints = hints;
     }
 
-    public static GridValidator of(Grid grid, List<Hint> hints) {
-        return new GridValidator(grid, hints);
+    public static GridValidator of(Grid grid) {
+        return new GridValidator(grid);
     }
 
     public GridValidator validateDimensions() {
@@ -61,63 +58,63 @@ public class GridValidator extends BaseValidator {
         return this;
     }
 
-    public GridValidator validateHints() {
-        AtomicInteger colHintsCounter = new AtomicInteger();
-        AtomicInteger rowHintsCounter = new AtomicInteger();
-        hints.forEach((Hint hint) -> {
-            if (hint.getDirection().equals(Direction.HORIZONTAL))
-                rowHintsCounter.getAndIncrement();
+    public GridValidator validateClues() {
+        AtomicInteger colCluesCounter = new AtomicInteger();
+        AtomicInteger rowCluesCounter = new AtomicInteger();
+        this.grid.getClues().forEach((Clue clue) -> {
+            if (clue.getDirection().equals(Direction.HORIZONTAL))
+                rowCluesCounter.getAndIncrement();
             else
-                colHintsCounter.getAndIncrement();
+                colCluesCounter.getAndIncrement();
         });
-        if (colHintsCounter.get() < grid.getDimensions().getHeight() || rowHintsCounter.get() < grid.getDimensions().getWidth()) {
+        if (colCluesCounter.get() < grid.getDimensions().getHeight() || rowCluesCounter.get() < grid.getDimensions().getWidth()) {
             addError(GRID, "la grille doit avoir au moins 1 indice par ligne et par colonne");
             return this;
         }
         return this;
     }
 
-    public GridValidator validateSegmentsAgainstHints() {
+    public GridValidator validateSegmentsAgainstClues() {
         for (int rowIndex = 0; rowIndex < grid.getDimensions().getHeight(); rowIndex++) {
             int segments = countSegments(grid.getMatrixRepresentation()[rowIndex]);
             int finalRowIndex = rowIndex;
-            long rowHintsCount = hints.stream()
-                    .filter(hint -> hint.getDirection() == Direction.HORIZONTAL && hint.getIndex() == finalRowIndex)
+            long rowCluesCount = this.grid.getClues().stream()
+                    .filter(clue -> clue.getDirection() == Direction.HORIZONTAL && clue.getIndex() == finalRowIndex)
                     .count();
-            if (validateSegmentsWithHints(segments, rowHintsCount)) {
+            if (validateSegmentsWithClues(segments, rowCluesCount)) {
                 addError(GRID, String.format(
                         "Le nombre de segments dans la ligne %d (%d) ne correspond pas au nombre d'indices (%d)",
-                        rowIndex + 1, segments, rowHintsCount));
+                        rowIndex + 1, segments, rowCluesCount));
             }
         }
 
         for (int colIndex = 0; colIndex < grid.getDimensions().getWidth(); colIndex++) {
             int segments = countSegments(getColumn(grid.getMatrixRepresentation(), colIndex));
             int finalColIndex = colIndex;
-            long colHintsCount = hints.stream()
-                    .filter(hint -> hint.getDirection() == Direction.VERTICAL && hint.getIndex() == finalColIndex)
+            long colCluesCount = this.grid.getClues().stream()
+                    .filter(clue -> clue.getDirection() == Direction.VERTICAL && clue.getIndex() == finalColIndex)
                     .count();
-            if (validateSegmentsWithHints(segments, colHintsCount)) {
+            if (validateSegmentsWithClues(segments, colCluesCount)) {
                 addError(GRID, String.format(
                         "Le nombre de segments dans la colonne %d (%d) ne correspond pas au nombre d'indices (%d)",
-                        colIndex + 1, segments, colHintsCount));
+                        colIndex + 1, segments, colCluesCount));
             }
         }
 
         return this;
     }
 
-    public GridValidator validateHintsUsage() {
-        for (Hint hint : hints) {
+    public GridValidator validateCluesUsage() {
+        for (Clue clue : this.grid.getClues()) {
             int segmentCount;
-            if (hint.getDirection() == Direction.HORIZONTAL) {
-                segmentCount = countSegments(grid.getMatrixRepresentation()[hint.getIndex()]);
+            if (clue.getDirection() == Direction.HORIZONTAL) {
+                segmentCount = countSegments(grid.getMatrixRepresentation()[clue.getIndex()]);
             } else {
-                segmentCount = countSegments(getColumn(grid.getMatrixRepresentation(), hint.getIndex()));
+                segmentCount = countSegments(getColumn(grid.getMatrixRepresentation(), clue.getIndex()));
             }
             if (segmentCount == 0) {
                 addError(GRID, String.format("L'indice %s à la position %d est inutilisé",
-                        hint.getDirection(), hint.getIndex() + 1));
+                        clue.getDirection(), clue.getIndex() + 1));
             }
         }
         return this;
@@ -145,8 +142,8 @@ public class GridValidator extends BaseValidator {
         return segmentCount;
     }
 
-    private boolean validateSegmentsWithHints(int segments, long hints) {
-        return segments <= hints;
+    private boolean validateSegmentsWithClues(int segments, long clues) {
+        return segments <= clues;
     }
 
     private char[] getColumn(char[][] matrix, int colIndex) {

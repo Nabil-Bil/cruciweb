@@ -1,13 +1,19 @@
 package com.univ.service;
 
+import com.univ.enums.Direction;
+import com.univ.enums.GameDifficulty;
+import com.univ.model.Clue;
 import com.univ.model.Grid;
-import com.univ.model.Hint;
+import com.univ.model.User;
+import com.univ.model.embeddables.Dimension;
 import com.univ.repository.GridRepository;
 import com.univ.repository.GridRepositoryImpl;
+import com.univ.util.SessionManager;
 import com.univ.validator.GridValidator;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class GridServiceImpl implements GridService {
     GridRepository gridRepository;
@@ -19,8 +25,29 @@ public class GridServiceImpl implements GridService {
 
 
     @Override
-    public GridValidator createGrid(Grid grid, List<Hint> hints) throws Exception {
-        return null;
+    public GridValidator create(String name, GameDifficulty difficulty, Dimension dimension, String gridJson, List<String> rowClues, List<String> columnClues, HttpSession session) throws Exception {
+        SessionManager sessionManager = new SessionManager(session);
+        UserService userService = new UserServiceImpl();
+        Optional<User> user = userService.getUserById((UUID) sessionManager.getLoggedInUserId());
+        Grid grid = new Grid(name, difficulty, dimension, user.get(), gridJson);
+        List<Clue> clues = new ArrayList<Clue>();
+        IntStream.range(0, rowClues.size()).forEach(i -> {
+            Clue clue = new Clue(rowClues.get(i), Direction.HORIZONTAL, i, grid);
+            clues.add(clue);
+        });
+        IntStream.range(0, columnClues.size()).forEach(i -> {
+            Clue clue = new Clue(columnClues.get(i), Direction.VERTICAL, i, grid);
+            clues.add(clue);
+        });
+        grid.setClues(clues);
+        GridValidator gridValidator = GridValidator.of(grid);
+
+        if (gridValidator.isValid()) {
+            Grid savedGrid = gridRepository.save(grid);
+        }
+        return gridValidator;
+
+
     }
 
     @Override
