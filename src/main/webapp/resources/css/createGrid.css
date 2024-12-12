@@ -10,6 +10,8 @@ body {
 
 .container {
     display: flex;
+    flex-direction: column-reverse;
+    gap: 20px;
     justify-content: space-between;
     padding: 20px;
 }
@@ -17,7 +19,6 @@ body {
 .grid-display {
     display: flex;
     flex-direction: column;
-    flex: 2;
     padding: 10px;
     gap: 15px;
 }
@@ -30,6 +31,42 @@ body {
 .grid-wrapper {
     display: flex;
     flex-direction: column;
+    flex: 7;
+}
+
+.crossword-wrapper {
+    display: flex;
+    align-items: start;
+    gap: 50px;
+    justify-content: space-between;
+    padding: 50px;
+}
+
+.clues-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 3;
+}
+
+.clue {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.clues h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.clues-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 15px;
 }
 
 .column-indices {
@@ -123,7 +160,7 @@ input[type="text"],
 input[type="number"],
 select {
     box-sizing: border-box;
-    padding: 15px 5px;
+    padding: 15px 10px;
     border: 1px solid #555;
     border-radius: 4px;
     background-color: #181818;
@@ -134,7 +171,6 @@ select {
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
-    cursor: pointer;
 }
 
 input:focus,
