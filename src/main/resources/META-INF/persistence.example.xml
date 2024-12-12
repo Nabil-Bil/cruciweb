@@ -1,23 +1,20 @@
-<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
-  version="3.0">
-  <persistence-unit name="default">
-    <class>com.univ.model.User</class>
-    <class>com.univ.model.User</class>
-    <class>com.univ.model.GridRow</class>
-    <class>com.univ.model.Hint</class>
-    <class>com.univ.model.Cell</class>
-    <class>com.univ.model.Grid</class>
-    <class>com.univ.model.Game</class>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="default">
+        <class>com.univ.model.User</class>
+        <class>com.univ.model.Clue</class>
+        <class>com.univ.model.Grid</class>
+        <class>com.univ.model.Game</class>
 
-    <properties>
-      <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-      <property name="jakarta.persistence.jdbc.url"
-        value="" />
-      <property name="jakarta.persistence.jdbc.user" value="" />
-      <property name="jakarta.persistence.jdbc.password" value="" />
-      <property name="jakarta.persistence.schema-generation.database.action" value="create" />
-    </properties>
-  </persistence-unit>
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url"
+                      value=""/>
+            <property name="jakarta.persistence.jdbc.user" value=""/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+        </properties>
+    </persistence-unit>
 </persistence>
