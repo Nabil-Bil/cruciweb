@@ -3,9 +3,13 @@ package com.univ.model;
 import com.univ.enums.GameDifficulty;
 import com.univ.model.embeddables.Dimension;
 import com.univ.util.Position;
+import jakarta.json.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.*;
 
 @Entity
@@ -34,12 +38,12 @@ public class Grid {
     })
     private Dimension dimensions;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_grid_user"), referencedColumnName = "id")
     private User createdBy;
 
-    @OneToMany(mappedBy = "grid", cascade = CascadeType.ALL, targetEntity = Hint.class)
-    private List<Hint> hints;
+    @OneToMany(mappedBy = "grid", cascade = CascadeType.ALL, targetEntity = Clue.class)
+    private List<Clue> clues;
 
     @Column(nullable = false, name = "created_at", updatable = false)
     private Date createdAt;
@@ -64,46 +68,52 @@ public class Grid {
         this.createdAt = new Date();
     }
 
-    public Grid(String name, GameDifficulty difficulty, Dimension dimensions, User createdBy, String gridRepresentation) {
+    public Grid(String name, GameDifficulty difficulty, Dimension dimensions, User createdBy, String gridRepresentation) throws IOException {
         this.name = name;
         this.difficulty = difficulty;
         this.dimensions = dimensions;
         this.createdBy = createdBy;
         this.gridRepresentation = gridRepresentation;
-        this.matrixRepresentation = convertTextToMatrix(gridRepresentation);
+        this.matrixRepresentation = decodeGridFromJson(gridRepresentation);
         this.blackCells = getBlackCellsPositions();
         this.createdAt = new Date();
     }
 
-    public static char[][] convertTextToMatrix(String gridText) {
-        String[] rows = gridText.split("\n");
-        char[][] matrix = new char[rows.length][];
-
-        for (int i = 0; i < rows.length; i++) {
-            matrix[i] = rows[i].toCharArray();
+    public static char[][] decodeGridFromJson(String json) throws IOException {
+        JsonReader reader = Json.createReader(new StringReader(json));
+        JsonArray rows = reader.readArray();
+        char[][] matrix = new char[rows.size()][];
+        for (int i = 0; i < rows.size(); i++) {
+            JsonArray row = rows.getJsonArray(i);
+            matrix[i] = new char[row.size()];
+            for (int j = 0; j < row.size(); j++) {
+                matrix[i][j] = row.getString(j).charAt(0);
+            }
         }
-
         return matrix;
+
     }
 
-    public static String convertMatrixToText(char[][] matrix) {
-        StringBuilder gridText = new StringBuilder();
-
-        for (char[] row : matrix) {
-            for (char cell : row) {
-                gridText.append(cell).append(" ");
+    public static String encodeGridToJson(char[][] matrix) throws IOException {
+        try (StringWriter writer = new StringWriter(); JsonWriter jsonWriter = Json.createWriter(writer)) {
+            JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+            for (char[] row : matrix) {
+                JsonArrayBuilder rowBuilder = Json.createArrayBuilder();
+                for (char cell : row) {
+                    rowBuilder.add(String.valueOf(cell));
+                }
+                arrayBuilder.add(rowBuilder.build());
             }
-            gridText.setLength(gridText.length() - 1);
-            gridText.append("\n");
+            JsonArray jsonArray = arrayBuilder.build();
+            jsonWriter.writeArray(jsonArray);
+            return writer.toString();
         }
-
-        return gridText.toString().trim();
     }
 
     @PostLoad
-    private void initializeTransientFields() {
+    private void initializeTransientFields() throws IOException {
         if (this.gridRepresentation != null) {
-            this.matrixRepresentation = convertTextToMatrix(this.gridRepresentation);
+            this.matrixRepresentation = decodeGridFromJson(this.gridRepresentation);
             this.blackCells = getBlackCellsPositions();
         }
     }
@@ -128,9 +138,9 @@ public class Grid {
         return gridRepresentation;
     }
 
-    public void setGridRepresentation(String gridRepresentation) {
+    public void setGridRepresentation(String gridRepresentation) throws IOException {
         this.gridRepresentation = gridRepresentation;
-        this.matrixRepresentation = convertTextToMatrix(gridRepresentation);
+        this.matrixRepresentation = decodeGridFromJson(gridRepresentation);
         this.blackCells = getBlackCellsPositions();
     }
 
@@ -170,8 +180,12 @@ public class Grid {
         this.createdBy = createdBy;
     }
 
-    public List<Hint> getHints() {
-        return hints;
+    public List<Clue> getClues() {
+        return clues;
+    }
+
+    public void setClues(List<Clue> clues) {
+        this.clues = clues;
     }
 
     public char[][] getMatrixRepresentation() {

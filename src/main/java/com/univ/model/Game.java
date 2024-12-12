@@ -18,7 +18,7 @@ public class Game {
     @Column(nullable = false, updatable = false, length = 1024, name = "grid_representation")
     private String gridRepresentation;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_game_user"), referencedColumnName = "id")
     private User playedBy;
 
