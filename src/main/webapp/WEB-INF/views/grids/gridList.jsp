@@ -33,7 +33,8 @@
         <p>Liste des Grilles</p>
         <div>
             <% if (sessionManager.isLoggedIn() && !sessionManager.isAdmin()) { %>
-            <a class="button" href="<%=request.getContextPath().concat(Routes.CREATE_GRID_ROUTE)%>">Create</a>
+            <a class="button" style="text-align: center;"
+               href="<%=request.getContextPath().concat(Routes.CREATE_GRID_ROUTE)%>">Create</a>
             <% } %>
             <div class="button filter-button clicked-filter-button">Filtrer par
                 <img src="${pageContext.request.contextPath}/resources/assets/icons/arrow_drop_down.svg" alt="icon">
