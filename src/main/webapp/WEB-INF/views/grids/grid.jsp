@@ -3,6 +3,8 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="com.univ.util.SessionManager" %>
 <%@ page import="java.util.UUID" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.univ.model.Clue" %>
 <%
     Grid grid = (Grid) request.getAttribute("grid");
 %>
@@ -34,17 +36,62 @@
     <div class="grid-image-container">
         <img src="${pageContext.request.contextPath}/resources/assets/images/crossword.png" alt="Grille"
              class="grid-image">
-    </div>
+        <div class="clues-container">
+            <div class="horizontal-clues">
+                <h2>Horizontales</h2>
+                <ul>
+                    <%
+                        List<Clue> horizontalClues = grid.getHorizontalClues();
+                        for (int i = 0; i < horizontalClues.size(); i++) {
+                            StringBuilder sb = new StringBuilder();
+                            sb.append("<li class='clue-item'>");
+                            sb.append(i + 1);
+                            sb.append(" - ");
+                            sb.append(horizontalClues.get(i).getValue());
+                            sb.append("</li>");
+                            out.println(sb.toString());
+                        }
+                    %>
+                </ul>
+            </div>
+            <div class="vertical-clues">
+                <h2>Verticales</h2>
+                <ul>
+                    <%
+                        List<Clue> verticalClues = grid.getVerticalClues();
+                        for (int i = 0; i < verticalClues.size(); i++) {
+                            StringBuilder sb = new StringBuilder();
+                            sb.append("<li class='clue-item'>");
 
+                            sb.append(Character.toChars(65 + i)[0]);
+                            sb.append(" - ");
+                            sb.append(verticalClues.get(i).getValue());
+                            sb.append("</li>");
+                            out.println(sb.toString());
+                        }
+                    %>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
     <div class="action-container">
         <button class="play-button" onclick="window.location.href='gamePage.html'">Jouer</button>
         <%
             SessionManager sessionManager = new SessionManager(session);
-            if (sessionManager.isAdmin() || ((UUID) sessionManager.getLoggedInUserId()).equals(grid.getCreatedBy().getId())) {%>
-        <button class="delete-button" onclick="window.location.href='gamePage.html'"> Supprimer</button>
+            if (sessionManager.isLoggedIn()) {
+                if (sessionManager.isAdmin() || ((UUID) sessionManager.getLoggedInUserId()).equals(grid.getCreatedBy().getId())) {%>
+        <form action="${pageContext.request.contextPath}/grid/<%=grid.getId()%>" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="csrfToken" value="${csrfToken}">
+            <button class="delete-button" type="submit">Supprimer</button>
+        </form>
         <%
+                }
             }
         %>
+
 
     </div>
 </div>

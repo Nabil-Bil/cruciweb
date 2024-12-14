@@ -1,5 +1,6 @@
 package com.univ.model;
 
+import com.univ.enums.Direction;
 import com.univ.enums.GameDifficulty;
 import com.univ.model.embeddables.Dimension;
 import com.univ.util.Position;
@@ -186,6 +187,26 @@ public class Grid {
 
     public void setClues(List<Clue> clues) {
         this.clues = clues;
+    }
+
+    public List<Clue> getHorizontalClues() {
+        List<Clue> horizontalClues = new ArrayList<Clue>();
+        for (Clue clue : this.clues) {
+            if (clue.getDirection() == Direction.HORIZONTAL) {
+                horizontalClues.add(clue);
+            }
+        }
+        return horizontalClues;
+    }
+
+    public List<Clue> getVerticalClues() {
+        List<Clue> verticalClues = new ArrayList<Clue>();
+        for (Clue clue : this.clues) {
+            if (clue.getDirection() == Direction.VERTICAL) {
+                verticalClues.add(clue);
+            }
+        }
+        return verticalClues;
     }
 
     public char[][] getMatrixRepresentation() {

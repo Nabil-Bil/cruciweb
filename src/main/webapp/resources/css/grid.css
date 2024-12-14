@@ -46,15 +46,14 @@
 }
 
 .grid-image-container {
-    text-align: center;
     margin-bottom: 20px;
-    border: white 1px solid;
     width: max-content;
 }
 
 .grid-image {
     width: 100%;
     max-width: 600px;
+    border: white 1px solid;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 0;
@@ -96,4 +95,33 @@
 
 .play-button:hover {
     background-color: #45a049;
+}
+
+
+.horizontal-clues h2, .vertical-clues h2 {
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+.horizontal-clues ul, .vertical-clues ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.clue-item {
+    font-size: 0.9rem;
+}
+
+.grid-image-container {
+    display: flex;
+    gap: 25px;
+}
+
+.clues-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: 20px;
 }
