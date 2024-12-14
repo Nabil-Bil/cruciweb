@@ -1,0 +1,99 @@
+@import "main.css";
+
+
+.grid-detail-container {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.grid-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.grid-name {
+    font-size: 32px;
+}
+
+.created-by {
+    font-size: 16px;
+}
+
+.created-by span {
+    font-weight: bold;
+}
+
+.created-date {
+    font-size: 16px;
+}
+
+.created-date span {
+    font-weight: bold;
+}
+
+.grid-image-container {
+    text-align: center;
+    margin-bottom: 20px;
+    border: white 1px solid;
+    width: max-content;
+}
+
+.grid-image {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0;
+}
+
+.action-container {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.play-button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 18px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+    font-size: 18px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #f44336;
+}
+
+.play-button:hover {
+    background-color: #45a049;
+}

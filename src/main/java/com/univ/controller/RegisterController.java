@@ -47,7 +47,7 @@ public class RegisterController extends HttpServlet {
                 SessionManager sessionManager = new SessionManager(session);
                 sessionManager.setLoggedinUser(user.getId(), user.getRole());
 
-                String dashboardURI = req.getContextPath().concat(Routes.GRID_ROUTE);
+                String dashboardURI = req.getContextPath().concat(Routes.GRIDS_ROUTE);
                 resp.sendRedirect(dashboardURI);
             }
         } catch (Exception e) {

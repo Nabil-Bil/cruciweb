@@ -13,7 +13,7 @@
     </a>
     <ul>
         <li><a href="<%=request.getContextPath()%>/">Acceuil</a></li>
-        <li><a href="<%=request.getContextPath().concat(Routes.GRID_ROUTE)%>">Grilles</a></li>
+        <li><a href="<%=request.getContextPath().concat(Routes.GRIDS_ROUTE)%>">Grilles</a></li>
         <% if (isAdmin) { %>
         <li><a href="<%=request.getContextPath().concat(Routes.USERS_ROUTE)%>">Utilisateurs</a></li>
         <% } %>

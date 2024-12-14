@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
                 if (sessionManager.isAdmin()) {
                     resp.sendRedirect(req.getContextPath() + Routes.USERS_ROUTE);
                 } else {
-                    resp.sendRedirect(req.getContextPath() + Routes.GRID_ROUTE);
+                    resp.sendRedirect(req.getContextPath() + Routes.GRIDS_ROUTE);
                 }
             }
         } catch (Exception e) {

@@ -17,7 +17,7 @@ public class DateFormatter {
         }
     }
 
-    private static boolean isToday(Date date) {
+    public static boolean isToday(Date date) {
         Calendar today = Calendar.getInstance();
         Calendar inputDate = Calendar.getInstance();
         inputDate.setTime(date);
@@ -25,5 +25,5 @@ public class DateFormatter {
         return today.get(Calendar.YEAR) == inputDate.get(Calendar.YEAR) &&
                 today.get(Calendar.DAY_OF_YEAR) == inputDate.get(Calendar.DAY_OF_YEAR);
     }
-    
+
 }

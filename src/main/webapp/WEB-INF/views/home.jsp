@@ -13,7 +13,7 @@
     <div class="hero-content">
         <h1>Bienvenue sur <span>Cruciweb</span></h1>
         <p>Explorez le monde des mots croisés et testez votre esprit logique.</p>
-        <a href="<%=request.getContextPath().concat(Routes.GRID_ROUTE)%>" class="cta-button">Commencez à jouer</a>
+        <a href="<%=request.getContextPath().concat(Routes.GRIDS_ROUTE)%>" class="cta-button">Commencez à jouer</a>
     </div>
 </section>
 

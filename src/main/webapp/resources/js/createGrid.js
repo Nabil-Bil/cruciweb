@@ -42,6 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
             verticalClue.textContent = letter;
             const verticalClueInput = document.createElement("input");
             verticalClueInput.type = "text";
+            verticalClueInput.required = true;
+            verticalClueInput.minLength = 2;
             verticalClueInput.name = `clue-column-${i}`;
             verticalClue.appendChild(verticalClueInput);
             verticalClues.appendChild(verticalClue);
@@ -58,6 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
             horizontalClue.textContent = i + 1;
             const horizontalClueInput = document.createElement("input");
             horizontalClueInput.type = "text";
+            horizontalClueInput.required = true;
+            horizontalClueInput.minLength = 2;
             horizontalClueInput.name = `clue-row-${i}`;
             horizontalClue.appendChild(horizontalClueInput);
             horizontalClues.appendChild(horizontalClue);
