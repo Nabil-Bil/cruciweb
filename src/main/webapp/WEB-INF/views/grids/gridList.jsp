@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CruciWeb - Grid List</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/grids.css">
-
+    <script src="${pageContext.request.contextPath}/resources/js/gridList.js" defer></script>
 </head>
 <body>
 <jsp:include page="../components/nav.jsp"/>
@@ -36,16 +36,29 @@
             <a class="button" style="text-align: center;"
                href="<%=request.getContextPath().concat(Routes.CREATE_GRID_ROUTE)%>">Create</a>
             <% } %>
-            <div class="button filter-button clicked-filter-button">Filtrer par
+
+
+            <%
+                if (sessionManager.isLoggedIn() && !sessionManager.isAdmin()) {
+                    String filter = request.getParameter("filter");
+                    if ("my-grids".equals(filter)) { %>
+            <a href="javascript:void(0)" onclick="updateParams('filter',undefined)" class="button">Toutes les
+                grilles</a>
+            <% } else { %>
+            <a href="javascript:void(0)" onclick="updateParams('filter','my-grids')" class="button">Mes grilles</a>
+            <% }
+            } %>
+
+            <div class="button sort-button clicked-sort-button">Trier par
                 <img src="${pageContext.request.contextPath}/resources/assets/icons/arrow_drop_down.svg" alt="icon">
                 <div class="dropdown hidden">
-                    <a href="${pageContext.request.contextPath}/grids?filter=creationDate">Date de création</a>
-                    <a href="${pageContext.request.contextPath}/grids?filter=difficultyAsc">Difficulté Ascendente</a>
-                    <a href="${pageContext.request.contextPath}/grids?filter=difficultyDesc">Difficulté Descendente</a>
+                    <a href="javascript:void(0);" onclick="updateParams('sort', 'creationDate')">Date de création</a>
+                    <a href="javascript:void(0);" onclick="updateParams('sort', 'difficultyAsc')">Difficulté
+                        Ascendante</a>
+                    <a href="javascript:void(0);" onclick="updateParams('sort', 'difficultyDesc')">Difficulté
+                        Descendante</a>
                 </div>
-
             </div>
-
         </div>
     </div>
     <div class="grid-list-container">
@@ -55,7 +68,8 @@
         } else {
             for (Grid grid : gridList) {
         %>
-        <div class="card transition-all duration-300">
+        <a href="<%=request.getContextPath().concat("/grid/").concat(grid.getId().toString())%>"
+           class="card transition-all duration-300">
             <img
                     src="${pageContext.request.contextPath}/resources/assets/images/crossword.png"
                     alt="Crossword placeholder"
@@ -64,7 +78,7 @@
             <div class="card-content">
                 <h2 class="title"><%=grid.getName()%>
                 </h2>
-                <p class="difficulty">Difficulty : <%=grid.getDifficulty().name().toLowerCase()%>
+                <p class="difficulty">Difficulty : <%=grid.getDifficulty().getDisplayName()%>
                 </p>
                 <p class="dimension">Dimension : <%=grid.getDimensions().toString()%>
                 </p>
@@ -75,7 +89,7 @@
                 <p>Crée le : <%=DateFormatter.formatDate(grid.getCreatedAt())%>
                 </p>
             </div>
-        </div>
+        </a>
         <%
                 }
             }%>
@@ -88,7 +102,7 @@
         %>
 
         <% if (currentPage > visiblePages + 1) { %>
-        <a href="${pageContext.request.contextPath}/grids?page=1" class="page-link">1</a>
+        <a href="javascript:void(0);" onclick="updateParams('page', 1)" class="page-link">1</a>
         <% if (startPage > 2) { %>
         <span class="ellipsis">...</span>
         <% } %>
@@ -97,7 +111,7 @@
         <%
             for (int i = startPage; i <= endPage; i++) {
         %>
-        <a href="${pageContext.request.contextPath}/grids?page=<%=i%>"
+        <a href="javascript:void(0);" onclick="updateParams('page', <%=i%>)"
            class="page-link transition-all duration-300 <%=currentPage == i ? "active-link" : ""%>">
             <%=i%>
         </a>
@@ -109,13 +123,24 @@
         <% if (endPage < numberOfPages - 1) { %>
         <span class="ellipsis">...</span>
         <% } %>
-        <a href="${pageContext.request.contextPath}/grids?page=<%=numberOfPages%>" class="page-link"><%=numberOfPages%>
+        <a href="javascript:void(0);" onclick="updateParams('page', <%=numberOfPages%>)"
+           class="page-link"><%=numberOfPages%>
         </a>
         <% } %>
     </div>
 </div>
 
-
-<script src="${pageContext.request.contextPath}/resources/js/gridList.js"></script>
+<script>
+    function updateParams(param, value) {
+        const url = new URL(window.location.href);
+        if (value === undefined) {
+            url.searchParams.delete(param);
+            window.location.href = url.toString();
+            return;
+        }
+        url.searchParams.set(param, value);
+        window.location.href = url.toString();
+    }
+</script>
 </body>
 </html>
