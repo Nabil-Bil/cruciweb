@@ -18,7 +18,7 @@
         <span class="${not empty username_error ? 'error' : 'hidden'}">${username_error}</span>
         <label for="username">Nom d'utilsiateur</label>
         <input type="text" name="username" id="username" required
-               class="${not empty username_error ? 'error-input' : ''}"/>
+               class="${not empty username_error ? 'error-input' : ''}" value="${username}"/>
         <span class="${not empty password_error ? 'error' : 'hidden'}">${password_error}</span>
         <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password" required

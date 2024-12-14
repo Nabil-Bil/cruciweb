@@ -41,6 +41,7 @@ public class RegisterController extends HttpServlet {
                 ValidationError validationError = userValidator.getValidationErrors().get(0);
                 req.setAttribute(validationError.getErrorField(),
                         validationError.getMessage());
+                req.setAttribute("username", username);
                 ViewResolver.resolve(req, "auth/register.jsp").forward(req, resp);
             } else {
                 HttpSession session = req.getSession(true);

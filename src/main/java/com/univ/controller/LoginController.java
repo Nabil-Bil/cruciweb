@@ -43,7 +43,7 @@ public class LoginController extends HttpServlet {
                 ValidationError validationError = authValidator.getValidationErrors().get(0);
                 req.setAttribute(validationError.getErrorField(),
                         validationError.getMessage());
-
+                req.setAttribute("username", username);
                 ViewResolver.resolve(req, "auth/login.jsp").forward(req, resp);
             } else {
                 if (sessionManager.isAdmin()) {
