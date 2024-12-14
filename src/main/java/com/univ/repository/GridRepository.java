@@ -13,5 +13,7 @@ public interface GridRepository {
 
     List<Grid> findAll() throws Exception;
 
+    List<Grid> findByCreatedBy(UUID userId) throws Exception;
+
     void deleteById(UUID id) throws Exception;
 }

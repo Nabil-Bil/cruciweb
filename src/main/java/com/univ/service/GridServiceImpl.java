@@ -55,14 +55,24 @@ public class GridServiceImpl implements GridService {
         this.gridRepository.deleteById(id);
     }
 
-    @Override
-    public Map<String, Object> getGridList(int page, int pageSize) throws Exception {
+    public Map<String, Object> getGridList(int page, int pageSize, String sortParam) throws Exception {
         List<Grid> allGrids = gridRepository.findAll();
-        if (allGrids == null || allGrids.isEmpty()) {
+        return paginateGrids(allGrids, page, pageSize, sortParam);
+    }
+
+    public Map<String, Object> getGridList(int page, int pageSize, String sortParam, HttpSession session) throws Exception {
+        SessionManager sessionManager = new SessionManager(session);
+        UUID userId = (UUID) sessionManager.getLoggedInUserId();
+        List<Grid> userGrids = gridRepository.findByCreatedBy(userId);
+        return paginateGrids(userGrids, page, pageSize, sortParam);
+    }
+
+    private Map<String, Object> paginateGrids(List<Grid> grids, int page, int pageSize, String sortParam) {
+        if (grids == null || grids.isEmpty()) {
             return Map.of("gridList", new ArrayList<>(), "numberOfPages", 0);
         }
-        int totalGrids = allGrids.size();
 
+        int totalGrids = grids.size();
         int totalPages = (int) Math.ceil((double) totalGrids / pageSize);
 
         if (page < 1) {
@@ -72,14 +82,23 @@ public class GridServiceImpl implements GridService {
         }
 
         int fromIndex = (page - 1) * pageSize;
+
         int toIndex = Math.min(fromIndex + pageSize, totalGrids);
-        Map<String, Object> map = Map.of("gridList", allGrids, "numberOfPages", totalPages);
-        return map;
+        if ("creationDate".equals(sortParam)) {
+            grids.sort(Comparator.comparing(Grid::getCreatedAt).reversed());
+        } else if ("difficultyAsc".equals(sortParam)) {
+            grids.sort(Comparator.comparing(grid -> grid.getDifficulty().ordinal()));
+        } else if ("difficultyDesc".equals(sortParam)) {
+            grids.sort(Comparator.comparing((Grid grid) -> grid.getDifficulty().ordinal()).reversed());
+        }
+        List<Grid> paginatedGrids = grids.subList(fromIndex, toIndex);
+
+        return Map.of("gridList", paginatedGrids, "numberOfPages", totalPages);
     }
 
     @Override
     public Optional<Grid> getGridById(UUID id) throws Exception {
-        return null;
+        return gridRepository.findById(id);
     }
 
 }

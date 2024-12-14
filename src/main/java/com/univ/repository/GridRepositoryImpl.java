@@ -1,6 +1,7 @@
 package com.univ.repository;
 
 import com.univ.model.Grid;
+import jakarta.persistence.EntityManager;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,5 +21,17 @@ public class GridRepositoryImpl extends BaseRepository<Grid> implements GridRepo
     @Override
     public void deleteById(UUID id) throws Exception {
         super.deleteById(Grid.class, id);
+    }
+
+    @Override
+    public List<Grid> findByCreatedBy(UUID userId) throws Exception {
+        try (EntityManager entityManager = createEntityManager()) {
+            return entityManager.createQuery("SELECT g FROM Grid g WHERE g.createdBy.id = :userId", Grid.class)
+                    .setParameter("userId", userId)
+                    .getResultList();
+
+        } catch (Exception e) {
+            throw new Exception("Error while finding grid by user id", e);
+        }
     }
 }

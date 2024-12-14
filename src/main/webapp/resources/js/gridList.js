@@ -1,6 +1,6 @@
 const dropdown = document.querySelector('.dropdown');
-const filterButton = document.querySelector('.filter-button');
-filterButton.addEventListener('click', () => {
+const sortButton = document.querySelector('.sort-button');
+sortButton.addEventListener('click', () => {
     dropdown.classList.toggle('hidden');
-    filterButton.classList.toggle('active');
+    sortButton.classList.toggle('active');
 });

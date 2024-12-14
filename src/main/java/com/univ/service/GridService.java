@@ -16,7 +16,9 @@ public interface GridService {
 
     void deleteGrid(UUID id) throws Exception;
 
-    Map<String, Object> getGridList(int page, int pageSize) throws Exception;
+    Map<String, Object> getGridList(int page, int pageSize, String sortParam) throws Exception;
+
+    Map<String, Object> getGridList(int page, int pageSize, String sortParam, HttpSession session) throws Exception;
 
     Optional<Grid> getGridById(UUID id) throws Exception;
 
