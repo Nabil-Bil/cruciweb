@@ -78,7 +78,7 @@ public abstract class BaseRepository<T> {
             if (entity != null) {
                 entityManager.remove(entity);
             }
-            return null;
+            return entity;
         });
     }
 }
