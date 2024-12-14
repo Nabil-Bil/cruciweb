@@ -45,6 +45,7 @@
 
     </div>
     <div class="grid-settings">
+        <span class="${not empty error ? 'error' : 'hidden'}">${error}</span>
         <h2>Paramètres de la Grille</h2>
         <div class="form-group">
             <label for="grid-name">Nom de la Grille :</label>
