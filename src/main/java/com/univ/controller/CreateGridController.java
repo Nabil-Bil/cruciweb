@@ -6,6 +6,7 @@ import com.univ.service.GridService;
 import com.univ.service.GridServiceImpl;
 import com.univ.util.Routes;
 import com.univ.util.ViewResolver;
+import com.univ.validator.GridValidator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -46,8 +47,13 @@ public class CreateGridController extends HttpServlet {
                 String columnClue = req.getParameter("clue-column-" + i);
                 columnClues.add(columnClue);
             }
-            gridService.create(name, difficulty, dimension, gridJson, rowClues, columnClues, req.getSession());
-            resp.sendRedirect(Routes.CREATE_GRID_ROUTE);
+            GridValidator gridValidator = gridService.create(name, difficulty, dimension, gridJson, rowClues, columnClues, req.getSession());
+            if (gridValidator.isValid()) {
+                resp.sendRedirect(req.getContextPath().concat(Routes.GRIDS_ROUTE).concat("?filter=my-grids&sort=creationDate"));
+            } else {
+                req.setAttribute("error", gridValidator.getValidationErrors().get(0).getMessage());
+                ViewResolver.resolve(req, "grids/create.jsp").forward(req, resp);
+            }
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
         }
