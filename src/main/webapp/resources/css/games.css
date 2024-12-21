@@ -1,0 +1,28 @@
+@import "grids.css";
+
+.card:hover {
+    transform: none;
+    box-shadow: none;
+    cursor: default;
+}
+
+
+.card-footer-buttons {
+
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    justify-self: center;
+}
+
+.card-footer-buttons a {
+    flex: 2
+}
+
+.card-footer-buttons form {
+    flex: 8;
+    width: max-content;
+}

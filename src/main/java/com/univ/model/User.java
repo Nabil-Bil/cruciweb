@@ -4,6 +4,7 @@ import com.univ.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import java.util.Date;
 import java.util.List;
@@ -14,50 +15,44 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
 
+    @Column(nullable = false, name = "CREATED_AT", updatable = false)
+    private final Date createdAt = new Date();
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
     @Column(nullable = false, unique = true, length = 50)
     @NotBlank
     private String username;
-
     @Column(nullable = false, length = 255)
     @NotBlank
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
-
     @Column(nullable = false, length = 15)
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Column(nullable = false, name = "created_at", updatable = false)
-    private Date createdAt;
-
-    @Column(nullable = true, name = "updated_at", updatable = true)
+    @Column(nullable = true, name = "UPDATED_AT", updatable = true)
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, targetEntity = Grid.class)
+    @CascadeOnDelete
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Grid.class)
     private List<Grid> grids;
 
-    @OneToMany(mappedBy = "playedBy", cascade = CascadeType.ALL, targetEntity = Game.class)
+    @CascadeOnDelete
+    @OneToMany(mappedBy = "playedBy", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Game.class)
     private List<Game> games;
 
     public User() {
-        this.createdAt = new Date();
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.createdAt = new Date();
     }
 
     public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
-        this.createdAt = new Date();
     }
 
     public static User copyOf(User user) {

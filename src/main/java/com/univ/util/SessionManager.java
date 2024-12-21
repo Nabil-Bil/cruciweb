@@ -20,14 +20,14 @@ public final class SessionManager {
     public boolean isAdmin() {
         return isLoggedIn() && session.getAttribute(SESSION_ROLE_KEY) != null && session.getAttribute(SESSION_ROLE_KEY).equals(Role.ADMIN);
     }
-
+    
     public Object getLoggedInUserId() {
         if (session == null)
             return null;
         return session.getAttribute(SESSION_USER_ID_KEY);
     }
 
-    public void setLoggedinUser(Object userId, Object role) {
+    public void setLoggedUser(Object userId, Object role) {
         if (session != null) {
             session.setAttribute(SESSION_USER_ID_KEY, userId);
             session.setAttribute(SESSION_ROLE_KEY, role);

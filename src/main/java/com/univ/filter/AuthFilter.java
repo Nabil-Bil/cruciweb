@@ -19,7 +19,7 @@ public class AuthFilter implements Filter {
             SessionManager sessionManager = new SessionManager(session);
             String loginURI = req.getContextPath().concat(Routes.LOGIN_ROUTE);
             String registerURI = req.getContextPath().concat(Routes.REGISTER_ROUTE);
-            String dashboardURI = req.getContextPath().concat(Routes.DASHBOARD_ROUTE);
+            String gridsURI = req.getContextPath().concat(Routes.GRIDS_ROUTE);
             boolean isLoggedIn = sessionManager.isLoggedIn();
             boolean authRequest = req.getRequestURI().equals(loginURI) || req.getRequestURI().equals(registerURI);
             if (isLoggedIn) {
@@ -28,7 +28,7 @@ public class AuthFilter implements Filter {
                         resp.sendRedirect(req.getContextPath().concat(Routes.USERS_ROUTE));
                         return;
                     }
-                    resp.sendRedirect(dashboardURI);
+                    resp.sendRedirect(gridsURI);
                 } else {
                     chain.doFilter(request, response);
                 }

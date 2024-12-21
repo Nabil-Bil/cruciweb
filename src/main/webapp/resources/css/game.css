@@ -1,0 +1,119 @@
+@import "main.css";
+
+.grid {
+    display: grid;
+    gap: 2px;
+    background-color: #222;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.crossword-wrapper {
+    display: flex;
+    align-items: start;
+    gap: 50px;
+    justify-content: center;
+    padding: 50px;
+}
+
+.grid-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.grid-container {
+    display: flex;
+}
+
+.column-indices {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2px;
+    margin-left: 50px;
+    margin-bottom: 15px;
+}
+
+.column-indices span {
+    width: 32px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.row-indices {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.row-indices span {
+    width: 30px;
+    text-align: right;
+    padding-right: 5px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.horizontal-clues h2, .vertical-clues h2 {
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+.horizontal-clues ul, .vertical-clues ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.clue-item {
+    font-size: 0.9rem;
+}
+
+.clues-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: 20px;
+}
+
+.button {
+    width: 100%;
+    flex: 5;
+}
+
+.container {
+    padding-bottom: 50px;
+}
+
+.buttons-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.grid-cell {
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 2px;
+    text-align: center;
+    z-index: 1;
+    line-height: 30px;
+}
+
+.grid-cell.selected {
+    outline: 2px solid #fff;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.2);
+}

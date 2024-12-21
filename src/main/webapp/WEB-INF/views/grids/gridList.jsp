@@ -24,6 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CruciWeb - Grid List</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/grids.css">
+    <script src="${pageContext.request.contextPath}/resources/js/utils.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/gridList.js" defer></script>
 </head>
 <body>
@@ -130,17 +131,5 @@
     </div>
 </div>
 
-<script>
-    function updateParams(param, value) {
-        const url = new URL(window.location.href);
-        if (value === undefined) {
-            url.searchParams.delete(param);
-            window.location.href = url.toString();
-            return;
-        }
-        url.searchParams.set(param, value);
-        window.location.href = url.toString();
-    }
-</script>
 </body>
 </html>

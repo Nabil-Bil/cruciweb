@@ -56,6 +56,8 @@
         <url-pattern>/register</url-pattern>
         <url-pattern>/dashboard</url-pattern>
         <url-pattern>/logout</url-pattern>
+        <url-pattern>/games</url-pattern>
+        <url-pattern>/game/*</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>AdminFilter</filter-name>
@@ -75,7 +77,15 @@
         <filter-name>UserOnlyFilter</filter-name>
         <url-pattern>/grids/create</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>AnonymousFilter</filter-name>
+        <filter-class>com.univ.filter.AnonymousFilter</filter-class>
+    </filter>
 
+    <filter-mapping>
+        <filter-name>AnonymousFilter</filter-name>
+        <url-pattern>/anonymous-game/grid/*</url-pattern>
+    </filter-mapping>
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/views/errors/404.jsp</location>
@@ -84,10 +94,10 @@
         <error-code>401</error-code>
         <location>/WEB-INF/views/errors/401.jsp</location>
     </error-page>
-    <!--      <error-page>-->
-    <!--            <error-code>403</error-code>-->
-    <!--            <location>/WEB-INF/views/errors/403.jsp</location>-->
-    <!--      </error-page>-->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/views/errors/403.jsp</location>
+    </error-page>
     <!-- <error-page>
           <error-code>500</error-code>
           <location>/WEB-INF/views/errors/500.jsp</location>

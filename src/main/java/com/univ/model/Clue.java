@@ -27,11 +27,11 @@ public class Clue {
     @NotBlank
     private Direction direction;
 
-    @Column(name = "`index`", nullable = false)
+    @Column(name = "`INDEX`", nullable = false)
     @PositiveOrZero
     private int index;
 
-    @JoinColumn(name = "grid_id", updatable = false, nullable = false, foreignKey = @ForeignKey(name = "fk_clue_grid"), referencedColumnName = "id")
+    @JoinColumn(name = "GRID_ID", updatable = false, nullable = false)
     @ManyToOne(targetEntity = Grid.class)
     private Grid grid;
 

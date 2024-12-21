@@ -3,7 +3,6 @@ package com.univ.model;
 import com.univ.enums.Direction;
 import com.univ.enums.GameDifficulty;
 import com.univ.model.embeddables.Dimension;
-import com.univ.util.Position;
 import jakarta.json.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +15,8 @@ import java.util.*;
 @Entity
 @Table(name = "grids")
 public class Grid {
+    @Column(nullable = false, name = "CREATED_AT", updatable = false)
+    private final Date createdAt = new Date();
     @Column
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,40 +24,30 @@ public class Grid {
     @Column(nullable = false, length = 50, updatable = false)
     @NotBlank
     private String name;
-
-    @Column(nullable = false, updatable = false, length = 1024, name = "grid_representation")
+    @Column(nullable = false, updatable = false, length = 1024, name = "GRID_REPRESENTATION")
     private String gridRepresentation;
-
     @Column(nullable = false, length = 50, updatable = false)
     @Enumerated(EnumType.STRING)
     @NotBlank
     private GameDifficulty difficulty;
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "width", column = @Column(nullable = false)),
             @AttributeOverride(name = "height", column = @Column(nullable = false))
     })
     private Dimension dimensions;
-
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_grid_user"), referencedColumnName = "id")
+    @JoinColumn(nullable = false, updatable = false, name = "USER_ID")
     private User createdBy;
 
-    @OneToMany(mappedBy = "grid", cascade = CascadeType.ALL, targetEntity = Clue.class)
+    @OneToMany(mappedBy = "grid", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Clue.class)
     private List<Clue> clues;
-
-    @Column(nullable = false, name = "created_at", updatable = false)
-    private Date createdAt;
-
-    @Column(nullable = true, name = "updated_at", updatable = true)
+    @Column(nullable = true, name = "UPDATED_AT", updatable = true)
     private Date updatedAt;
 
     @Transient
     private char[][] matrixRepresentation;
 
-    @Transient
-    private List<Position> blackCells;
 
     public Grid() {
     }
@@ -66,7 +57,6 @@ public class Grid {
         this.difficulty = difficulty;
         this.dimensions = dimensions;
         this.createdBy = createdBy;
-        this.createdAt = new Date();
     }
 
     public Grid(String name, GameDifficulty difficulty, Dimension dimensions, User createdBy, String gridRepresentation) throws IOException {
@@ -76,8 +66,6 @@ public class Grid {
         this.createdBy = createdBy;
         this.gridRepresentation = gridRepresentation;
         this.matrixRepresentation = decodeGridFromJson(gridRepresentation);
-        this.blackCells = getBlackCellsPositions();
-        this.createdAt = new Date();
     }
 
     public static char[][] decodeGridFromJson(String json) throws IOException {
@@ -111,11 +99,24 @@ public class Grid {
         }
     }
 
+    public char[][] generateEmptyGrid() throws IOException {
+        char[][] matrix = new char[this.dimensions.getHeight()][this.dimensions.getWidth()];
+        for (int row = 0; row < matrix.length; row++) {
+            for (int cell = 0; cell < matrix[row].length; cell++) {
+                if (this.matrixRepresentation[row][cell] == '*')
+                    matrix[row][cell] = '*';
+                else
+                    matrix[row][cell] = ' ';
+            }
+        }
+        return matrix;
+
+    }
+
     @PostLoad
     private void initializeTransientFields() throws IOException {
         if (this.gridRepresentation != null) {
             this.matrixRepresentation = decodeGridFromJson(this.gridRepresentation);
-            this.blackCells = getBlackCellsPositions();
         }
     }
 
@@ -142,7 +143,6 @@ public class Grid {
     public void setGridRepresentation(String gridRepresentation) throws IOException {
         this.gridRepresentation = gridRepresentation;
         this.matrixRepresentation = decodeGridFromJson(gridRepresentation);
-        this.blackCells = getBlackCellsPositions();
     }
 
     public GameDifficulty getDifficulty() {
@@ -213,9 +213,6 @@ public class Grid {
         return matrixRepresentation;
     }
 
-    public List<Position> getBlackCells() {
-        return blackCells;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -230,16 +227,5 @@ public class Grid {
         return Objects.hash(id);
     }
 
-    private List<Position> getBlackCellsPositions() {
-
-        List<Position> blackCellsPositions = new ArrayList<Position>();
-        for (int row = 0; row < this.matrixRepresentation.length; row++) {
-            for (int col = 0; col < this.matrixRepresentation[row].length; col++) {
-                if (this.matrixRepresentation[row][col] == '*') {
-                    blackCellsPositions.add(new Position(row, col));
-                }
-            }
-        }
-        return blackCellsPositions;
-    }
 }
+

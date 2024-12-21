@@ -17,13 +17,15 @@
         <% if (isAdmin) { %>
         <li><a href="<%=request.getContextPath().concat(Routes.USERS_ROUTE)%>">Utilisateurs</a></li>
         <% } %>
-        <% if (isLoggedIn) { %>
+        <% if (isLoggedIn) {%>
+        <li><a href="<%=request.getContextPath().concat(Routes.GAMES_ROUTE)%>">Mes Parties</a></li>
         <li>
             <form action="<%=request.getContextPath().concat(Routes.LOGOUT_ROUTE)%>" method="post">
                 <input type="submit" value="Se deconnecter">
                 <input type="hidden" name="csrfToken" value="${csrfToken}"/>
             </form>
         </li>
+
         <% } else { %>
         <li><a href="${pageContext.request.contextPath}/login">Se connecter</a></li>
         <li><a href="${pageContext.request.contextPath}/register">S'inscrire</a></li>

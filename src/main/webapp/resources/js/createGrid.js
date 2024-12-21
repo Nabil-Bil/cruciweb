@@ -86,19 +86,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleCellClick(cell) {
+        if (selectedCell) selectedCell.classList.remove("selected");
+
         if (cell.style.backgroundColor === BLACK_CELLS_COLOR) {
             selectedCell = null;
             return;
         }
 
-        if (selectedCell) selectedCell.classList.remove("selected");
-
         if (selectedCell === cell) {
             selectedCell = null;
-        } else {
-            selectedCell = cell;
-            cell.classList.add("selected");
+            return;
         }
+        selectedCell = cell;
+        cell.classList.add("selected");
+
     }
 
     function handleCellRightClick(event, cell) {

@@ -50,6 +50,8 @@ public abstract class BaseRepository<T> {
     public Optional<T> findById(Class<T> clazz, UUID id) throws Exception {
         try {
             this.entityManager = this.createEntityManager();
+            if (id == null)
+                return Optional.empty();
             Optional<T> entity = Optional.ofNullable(entityManager.find(clazz, id));
             entityManager.close();
             return entity;

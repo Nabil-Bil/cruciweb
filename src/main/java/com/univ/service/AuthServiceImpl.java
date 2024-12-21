@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
         AuthValidator validator = AuthValidator.of(user, optionalUser);
         validator.validateUsername().validatePassword();
         if (validator.isValid())
-            optionalUser.ifPresent(value -> sessionManager.setLoggedinUser(value.getId(), value.getRole()));
+            optionalUser.ifPresent(value -> sessionManager.setLoggedUser(value.getId(), value.getRole()));
 
         return validator;
     }

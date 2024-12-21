@@ -1,10 +1,10 @@
 <%@ page import="com.univ.model.Grid" %>
 <%@ page import="com.univ.util.DateFormatter" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="com.univ.util.SessionManager" %>
 <%@ page import="java.util.UUID" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.univ.model.Clue" %>
+<%@ page import="com.univ.util.Routes" %>
 <%
     Grid grid = (Grid) request.getAttribute("grid");
 %>
@@ -77,12 +77,23 @@
 
     </div>
     <div class="action-container">
-        <button class="play-button" onclick="window.location.href='gamePage.html'">Jouer</button>
         <%
-            SessionManager sessionManager = new SessionManager(session);
-            if (sessionManager.isLoggedIn()) {
+            SessionManager sessionManager = new SessionManager(request.getSession());
+            String anonymousGameRoute = request.getContextPath().concat("/anonymous-game/grid/").concat(grid.getId().toString());
+            String loggedInGameRoute = request.getContextPath().concat("/grid/").concat(grid.getId().toString());
+            boolean isLoggedInUser = sessionManager.isLoggedIn();
+        %>
+        <form action="<%=isLoggedInUser? loggedInGameRoute :anonymousGameRoute%>"
+              method="<%=isLoggedInUser?"post":"get"%>">
+            <%if (isLoggedInUser) {%>
+            <input type="hidden" name="csrfToken" value="${csrfToken}">
+            <%}%>
+            <button class="play-button" type="submit">Jouer</button>
+        </form>
+        <%
+            if (isLoggedInUser) {
                 if (sessionManager.isAdmin() || ((UUID) sessionManager.getLoggedInUserId()).equals(grid.getCreatedBy().getId())) {%>
-        <form action="${pageContext.request.contextPath}/grid/<%=grid.getId()%>" method="post">
+        <form action="<%=loggedInGameRoute%>" method="post">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="csrfToken" value="${csrfToken}">
             <button class="delete-button" type="submit">Supprimer</button>

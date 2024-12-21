@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface GridRepository {
-    Grid save(Grid user) throws Exception;
+    Grid save(Grid grid) throws Exception;
 
     Optional<Grid> findById(UUID id) throws Exception;
 

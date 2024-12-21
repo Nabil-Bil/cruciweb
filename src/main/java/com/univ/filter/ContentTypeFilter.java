@@ -23,6 +23,11 @@ public class ContentTypeFilter implements Filter {
             if ("GET".equalsIgnoreCase(httpRequest.getMethod())) {
                 httpResponse.setContentType("text/html; charset=UTF-8");
             }
+            if (requestURI.endsWith("/") && requestURI.length() > 1) {
+                requestURI = requestURI.substring(0, requestURI.length() - 1);
+                httpResponse.sendRedirect(requestURI);
+                return;
+            }
         }
 
         chain.doFilter(request, response);

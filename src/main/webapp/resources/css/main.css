@@ -97,12 +97,11 @@ input[type="password"]:focus {
     border: none;
     border-radius: 4px;
     font-size: 1rem;
-    width: 100%;
+    width: max-content;
     box-sizing: border-box;
     background-color: white;
     color: black;
     cursor: pointer;
-    max-width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -194,4 +193,14 @@ input.error-input {
 .page-link:hover {
     background: white;
     color: black;
+}
+
+.danger {
+    background-color: red;
+    color: white;
+}
+
+.success {
+    background-color: green;
+    color: white;
 }

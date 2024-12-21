@@ -12,7 +12,7 @@ public class DateFormatter {
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
             return timeFormat.format(date);
         } else {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             return dateFormat.format(date);
         }
     }
