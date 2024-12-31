@@ -1,6 +1,6 @@
 package com.univ.service;
 
-import com.univ.model.User;
+import com.univ.model.entity.User;
 import com.univ.validator.UserValidator;
 
 import java.util.List;

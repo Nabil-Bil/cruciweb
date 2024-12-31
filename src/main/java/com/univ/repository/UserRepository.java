@@ -1,6 +1,6 @@
 package com.univ.repository;
 
-import com.univ.model.User;
+import com.univ.model.entity.User;
 
 import java.util.List;
 import java.util.Optional;

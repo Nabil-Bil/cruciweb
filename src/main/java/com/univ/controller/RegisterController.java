@@ -1,7 +1,7 @@
 package com.univ.controller;
 
 import com.univ.enums.Role;
-import com.univ.model.User;
+import com.univ.model.entity.User;
 import com.univ.service.UserService;
 import com.univ.service.UserServiceImpl;
 import com.univ.util.Routes;

@@ -1,6 +1,6 @@
 package com.univ.controller;
 
-import com.univ.model.User;
+import com.univ.model.entity.User;
 import com.univ.service.AuthService;
 import com.univ.service.AuthServiceImpl;
 import com.univ.util.Routes;

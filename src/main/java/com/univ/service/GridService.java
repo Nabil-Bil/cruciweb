@@ -1,8 +1,8 @@
 package com.univ.service;
 
 import com.univ.enums.GameDifficulty;
-import com.univ.model.Grid;
 import com.univ.model.embeddables.Dimension;
+import com.univ.model.entity.Grid;
 import com.univ.validator.GridValidator;
 import jakarta.servlet.http.HttpSession;
 

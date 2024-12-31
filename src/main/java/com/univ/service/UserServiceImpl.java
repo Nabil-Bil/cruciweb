@@ -1,6 +1,6 @@
 package com.univ.service;
 
-import com.univ.model.User;
+import com.univ.model.entity.User;
 import com.univ.repository.UserRepository;
 import com.univ.repository.UserRepositoryImpl;
 import com.univ.util.BCryptUtil;

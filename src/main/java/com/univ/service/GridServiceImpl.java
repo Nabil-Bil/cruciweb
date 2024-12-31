@@ -2,10 +2,10 @@ package com.univ.service;
 
 import com.univ.enums.Direction;
 import com.univ.enums.GameDifficulty;
-import com.univ.model.Clue;
-import com.univ.model.Grid;
-import com.univ.model.User;
 import com.univ.model.embeddables.Dimension;
+import com.univ.model.entity.Clue;
+import com.univ.model.entity.Grid;
+import com.univ.model.entity.User;
 import com.univ.repository.GridRepository;
 import com.univ.repository.GridRepositoryImpl;
 import com.univ.util.SessionManager;
@@ -29,7 +29,7 @@ public class GridServiceImpl implements GridService {
         SessionManager sessionManager = new SessionManager(session);
         UserService userService = new UserServiceImpl();
         Optional<User> user = userService.getUserById((UUID) sessionManager.getLoggedInUserId());
-        Grid grid = new Grid(name, difficulty, dimension, user.get(), gridJson);
+        Grid grid = new Grid(name, difficulty, dimension, user.get(), gridJson.trim().toUpperCase());
         List<Clue> clues = new ArrayList<Clue>();
         IntStream.range(0, rowClues.size()).forEach(i -> {
             Clue clue = new Clue(rowClues.get(i), Direction.HORIZONTAL, i, grid);

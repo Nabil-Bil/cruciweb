@@ -1,4 +1,4 @@
-package com.univ.model;
+package com.univ.model.entity;
 
 import com.univ.enums.Direction;
 import jakarta.persistence.*;

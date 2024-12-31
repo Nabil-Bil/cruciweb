@@ -1,6 +1,6 @@
 package com.univ.validator;
 
-import com.univ.model.User;
+import com.univ.model.entity.User;
 import com.univ.util.BCryptUtil;
 
 import java.util.Optional;
