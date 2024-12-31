@@ -100,10 +100,10 @@
         <error-code>403</error-code>
         <location>/WEB-INF/views/errors/403.jsp</location>
     </error-page>
-    <!-- <error-page>
-          <error-code>500</error-code>
-          <location>/WEB-INF/views/errors/500.jsp</location>
-    </error-page> -->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/errors/500.jsp</location>
+    </error-page>
     <session-config>
         <session-timeout>60</session-timeout>
     </session-config>
