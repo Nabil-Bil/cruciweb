@@ -10,7 +10,7 @@ public class Utils {
     public static UUID getUUIDFromUrl(HttpServletRequest req) {
         String pathInfo = req.getPathInfo();
         if (pathInfo != null && pathInfo.startsWith("/")) {
-            pathInfo = pathInfo.substring(1);
+            pathInfo = pathInfo.substring(pathInfo.lastIndexOf('/') + 1);
         } else {
             return null;
         }
