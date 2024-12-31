@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.univ.model.User" %>
+<%@ page import="com.univ.model.entity.User" %>
 <%@ page import="com.univ.enums.Role" %>
 <%@ page import="com.univ.util.Routes" %>
 <%@ page import="java.text.SimpleDateFormat" %>

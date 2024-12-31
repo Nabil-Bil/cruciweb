@@ -1,9 +1,9 @@
-<%@ page import="com.univ.model.Grid" %>
+<%@ page import="com.univ.model.entity.Grid" %>
 <%@ page import="com.univ.util.DateFormatter" %>
 <%@ page import="com.univ.util.SessionManager" %>
 <%@ page import="java.util.UUID" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.univ.model.Clue" %>
+<%@ page import="com.univ.model.entity.Clue" %>
 <%@ page import="com.univ.util.Routes" %>
 <%
     Grid grid = (Grid) request.getAttribute("grid");
@@ -83,7 +83,7 @@
             String loggedInGameRoute = request.getContextPath().concat("/grid/").concat(grid.getId().toString());
             boolean isLoggedInUser = sessionManager.isLoggedIn();
         %>
-        <form action="<%=isLoggedInUser? loggedInGameRoute :anonymousGameRoute%>"
+        <form action="<%=isLoggedInUser ? loggedInGameRoute : anonymousGameRoute%>"
               method="<%=isLoggedInUser?"post":"get"%>">
             <%if (isLoggedInUser) {%>
             <input type="hidden" name="csrfToken" value="${csrfToken}">

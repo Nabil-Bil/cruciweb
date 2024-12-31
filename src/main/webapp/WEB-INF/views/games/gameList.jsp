@@ -1,5 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.univ.model.Game" %>
+<%@ page import="com.univ.model.entity.Game" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.univ.util.SessionManager" %>
 <%@ page import="com.univ.util.DateFormatter" %>
@@ -55,7 +55,8 @@
             <div class="card-footer">
                 <p>Crée par : <%=game.getGrid().getCreatedBy().getUsername()%>
                 </p>
-                <p>Mise à jour il y a : <%=DateFormatter.formatDate(game.getGrid().getUpdatedAt())%>
+                <p>Dernière Modification <%=DateFormatter.isToday(game.getUpdatedAt()) ? "à" : "le"%>
+                    : <%=DateFormatter.formatDate(game.getUpdatedAt())%>
                 </p>
                 <div class="card-footer-buttons">
                     <%

@@ -1,6 +1,6 @@
 <%@ page import="com.univ.util.Routes" %>
-<%@ page import="com.univ.model.Game" %>
-<%@ page import="com.univ.model.Clue" %>
+<%@ page import="com.univ.model.entity.Game" %>
+<%@ page import="com.univ.model.entity.Clue" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.univ.util.SessionManager" %>
 <%
@@ -25,6 +25,10 @@
 <body>
 <jsp:include page="../components/nav.jsp"/>
 <div class="container">
+    <div class="game-status">
+        <span class="${not empty error ? 'error' : 'hidden'}">${error}</span>
+        <span class="${not empty success ? 'code-success' : 'hidden'}">${success}</span>
+    </div>
     <div class="crossword-wrapper">
         <div class="grid-wrapper">
             <div class="column-indices" id="column-indices">
@@ -106,19 +110,14 @@
         </div>
     </div>
     <div class="buttons-wrapper">
-        <% if (sessionManager.isLoggedIn()) {%>
-        <form method="post" action="<%=request.getContextPath().concat("/game/").concat(game.getId().toString())%>">
-            <input type="hidden" name="_method" value="PUT">
-            <input type="hidden" name="csrfToken" value="${csrfToken}"/>
-            <input type="hidden" name="gridMatrixDataSave" id="gridMatrixDataSave" value="<%=game.getId()%>">
-            <button type="submit" class="button">Sauvgarder</button>
-        </form>
-        <%}%>
+
         <form method="post"
-              action="<%=!sessionManager.isLoggedIn()?request.getContextPath().concat("/anonymous-game/grid/").concat(game.getGrid().getId().toString()):request.getContextPath().concat("/game/").concat(game.getId().toString())%>">
+              action="<%=!sessionManager.isLoggedIn()?request.getContextPath().concat("/anonymous-game/grid/").concat(game.getGrid().getId().toString()):request.getContextPath().concat("/game/").concat(game.getId().toString())%>"
+              id="form-validation">
             <input type="hidden" name="csrfToken" value="${csrfToken}"/>
-            <input type="hidden" id="gridMatrixDataValidate" name="gridMatrixDataValidate">
-            <button type="submit" class="button">Valider</button>
+            <input type="hidden" id="gridMatrixData" name="gridMatrixData">
+            <button type="submit" class="button"><%=sessionManager.isLoggedIn() ? "Sauvgarder et Valider" : "Valider"%>
+            </button>
         </form>
 
     </div>
