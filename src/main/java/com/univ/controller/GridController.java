@@ -1,8 +1,8 @@
 package com.univ.controller;
 
-import com.univ.model.Game;
-import com.univ.model.Grid;
-import com.univ.model.User;
+import com.univ.model.entity.Game;
+import com.univ.model.entity.Grid;
+import com.univ.model.entity.User;
 import com.univ.service.*;
 import com.univ.util.Routes;
 import com.univ.util.SessionManager;

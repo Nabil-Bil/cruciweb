@@ -1,6 +1,6 @@
 package com.univ.repository;
 
-import com.univ.model.Grid;
+import com.univ.model.entity.Grid;
 
 import java.util.List;
 import java.util.Optional;

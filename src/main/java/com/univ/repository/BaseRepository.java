@@ -41,8 +41,10 @@ public abstract class BaseRepository<T> {
 
     }
 
+
     public T update(T entity) throws Exception {
         return executeInTransaction(() -> {
+
             return entityManager.merge(entity);
         });
     }
@@ -69,6 +71,7 @@ public abstract class BaseRepository<T> {
             entityManager.close();
             return entities;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Entities not found", e);
         }
 

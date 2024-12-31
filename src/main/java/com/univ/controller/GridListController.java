@@ -1,6 +1,6 @@
 package com.univ.controller;
 
-import com.univ.model.Grid;
+import com.univ.model.entity.Grid;
 import com.univ.service.GridService;
 import com.univ.service.GridServiceImpl;
 import com.univ.util.Routes;
@@ -55,5 +55,5 @@ public class GridListController extends HttpServlet {
         }
 
     }
-    
+
 }

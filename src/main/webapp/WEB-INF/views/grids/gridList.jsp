@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.univ.model.Grid" %>
+<%@ page import="com.univ.model.entity.Grid" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.univ.util.DateFormatter" %>
 <%@ page import="com.univ.util.SessionManager" %>
