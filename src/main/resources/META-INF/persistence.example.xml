@@ -3,10 +3,10 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
     <persistence-unit name="default">
-        <class>com.univ.model.User</class>
-        <class>com.univ.model.Clue</class>
-        <class>com.univ.model.Grid</class>
-        <class>com.univ.model.Game</class>
+        <class>com.univ.model.entity.User</class>
+        <class>com.univ.model.entity.Clue</class>
+        <class>com.univ.model.entity.Grid</class>
+        <class>com.univ.model.entity.Game</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
