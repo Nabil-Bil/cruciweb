@@ -1,4 +1,4 @@
-package com.univ.controller;
+package com.univ.controller.user;
 
 import com.univ.service.UserService;
 import com.univ.service.UserServiceImpl;

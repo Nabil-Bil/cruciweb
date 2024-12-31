@@ -1,4 +1,4 @@
-package com.univ.controller;
+package com.univ.controller.game;
 
 import com.univ.model.entity.Game;
 import com.univ.service.GameService;

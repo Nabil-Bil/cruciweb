@@ -1,4 +1,4 @@
-package com.univ.controller;
+package com.univ.controller.grid;
 
 import com.univ.enums.GameDifficulty;
 import com.univ.model.embeddables.Dimension;

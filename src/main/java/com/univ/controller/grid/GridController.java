@@ -1,4 +1,4 @@
-package com.univ.controller;
+package com.univ.controller.grid;
 
 import com.univ.model.entity.Game;
 import com.univ.model.entity.Grid;
@@ -83,7 +83,7 @@ public class GridController extends HttpServlet {
                 game = optionalGame.get();
             }
             resp.sendRedirect(req.getContextPath().concat("/game/".concat(game.getId().toString())));
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
