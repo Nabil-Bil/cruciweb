@@ -1,6 +1,6 @@
 package com.univ.validator;
 
-import com.univ.model.User;
+import com.univ.model.entity.User;
 
 import java.util.Optional;
 

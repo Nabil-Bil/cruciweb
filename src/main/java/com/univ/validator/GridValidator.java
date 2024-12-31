@@ -1,9 +1,9 @@
 package com.univ.validator;
 
 import com.univ.enums.Direction;
-import com.univ.model.Clue;
-import com.univ.model.Grid;
 import com.univ.model.embeddables.Dimension;
+import com.univ.model.entity.Clue;
+import com.univ.model.entity.Grid;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
