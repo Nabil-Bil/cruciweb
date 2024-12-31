@@ -1,6 +1,6 @@
 package com.univ.repository;
 
-import com.univ.model.Game;
+import com.univ.model.entity.Game;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public interface GameRepository {
     Game save(Game game) throws Exception;
+
+    Game update(Game game) throws Exception;
 
     Optional<Game> findById(UUID id) throws Exception;
 

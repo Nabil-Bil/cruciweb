@@ -1,6 +1,6 @@
 package com.univ.controller;
 
-import com.univ.model.Game;
+import com.univ.model.entity.Game;
 import com.univ.service.GameService;
 import com.univ.service.GameServiceImpl;
 import com.univ.util.Routes;

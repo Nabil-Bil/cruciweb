@@ -1,12 +1,13 @@
 package com.univ.controller;
 
-import com.univ.model.Game;
+import com.univ.model.entity.Game;
 import com.univ.service.GameService;
 import com.univ.service.GameServiceImpl;
 import com.univ.util.Routes;
 import com.univ.util.SessionManager;
 import com.univ.util.Utils;
 import com.univ.util.ViewResolver;
+import com.univ.validator.GameValidator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -41,6 +42,9 @@ public class GameController extends HttpServlet {
                 return;
             }
             req.setAttribute("game", game.get());
+            if (game.get().isSolved()) {
+                req.setAttribute("success", "Tu as gagné!");
+            }
             ViewResolver.resolve(req, "games/game.jsp").forward(req, resp);
 
         } catch (IllegalArgumentException illegalArgumentException) {
@@ -53,7 +57,27 @@ public class GameController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        try {
+            String gridJson = req.getParameter("gridMatrixData");
+            UUID uuid = Utils.getUUIDFromUrl(req);
+            GameService gameService = new GameServiceImpl();
+            Optional<Game> optionalGame = gameService.getGameById(uuid);
+            if (Utils.validateRequest(uuid, resp, optionalGame.isEmpty())) {
+                return;
+            }
+            Game game = optionalGame.get();
+            game.setGridRepresentation(gridJson);
+            GameValidator gameValidator = gameService.saveAndValidateGame(game);
+            if (gameValidator.isValid()) {
+                req.setAttribute("success", "Tu as gagné!");
+            } else {
+                req.setAttribute("error", gameValidator.getValidationErrors().get(0).getMessage());
+            }
+            req.setAttribute("game", game);
+            ViewResolver.resolve(req, "games/game.jsp").forward(req, resp);
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.univ.repository;
 
-import com.univ.model.Game;
+import com.univ.model.entity.Game;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -11,6 +11,11 @@ public class GameRepositoryImpl extends BaseRepository<Game> implements GameRepo
     @Override
     public Game save(Game game) throws Exception {
         return super.save(game);
+    }
+
+    public Game update(Game game) throws Exception {
+
+        return super.update(game);
     }
 
     @Override

@@ -204,3 +204,7 @@ input.error-input {
     background-color: green;
     color: white;
 }
+
+.code-success {
+    color: green;
+}

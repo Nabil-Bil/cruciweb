@@ -1,9 +1,10 @@
 package com.univ.service;
 
-import com.univ.model.Game;
+import com.univ.model.entity.Game;
 import com.univ.repository.GameRepository;
 import com.univ.repository.GameRepositoryImpl;
 import com.univ.util.SessionManager;
+import com.univ.validator.GameValidator;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.*;
@@ -41,6 +42,20 @@ public class GameServiceImpl implements GameService {
     @Override
     public Optional<Game> getGameByUserIdAndGridId(UUID userId, UUID gridId) throws Exception {
         return this.gameRepository.findByUserIdAndGridId(userId, gridId);
+    }
+
+    @Override
+    public GameValidator validateGame(Game game) throws Exception {
+        GameValidator gameValidator = GameValidator.of(game);
+        return gameValidator.validateGameState();
+    }
+
+    @Override
+    public GameValidator saveAndValidateGame(Game game) throws Exception {
+        GameValidator gameValidator = this.validateGame(game);
+
+        gameRepository.update(game);
+        return gameValidator;
     }
 
     private Map<String, Object> paginateGames(List<Game> games, int page, int pageSize) {

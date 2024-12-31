@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gridElement: document.getElementById("grid"),
         gridMatrixData: document.getElementById("gridMatrixData"),
         csrfToken: document.getElementById("csrfToken"),
-        form: document.getElementById("grid-form"),
+        form: document.getElementById("form-validation"),
         allCells: document.querySelectorAll(".grid-cell"),
     };
 
@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 form.reportValidity();
                 return;
             }
+
             form.submit();
         });
 

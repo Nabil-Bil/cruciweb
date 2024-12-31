@@ -1,4 +1,4 @@
-package com.univ.model;
+package com.univ.model.entity;
 
 import jakarta.persistence.*;
 
@@ -16,7 +16,7 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @Column(nullable = false, updatable = false, length = 1024, name = "GRID_REPRESENTATION")
+    @Column(nullable = false, updatable = true, length = 1024, name = "GRID_REPRESENTATION")
     private String gridRepresentation;
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
@@ -91,6 +91,10 @@ public class Game {
         if (o == null || getClass() != o.getClass()) return false;
         Game game = (Game) o;
         return Objects.equals(id, game.id);
+    }
+
+    public boolean isSolved() {
+        return this.gridRepresentation.toUpperCase().compareTo(this.grid.getGridRepresentation().toUpperCase()) == 0;
     }
 
     public Grid getGrid() {
