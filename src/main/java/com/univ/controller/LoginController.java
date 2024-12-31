@@ -6,8 +6,8 @@ import com.univ.service.AuthServiceImpl;
 import com.univ.util.Routes;
 import com.univ.util.SessionManager;
 import com.univ.util.ViewResolver;
-import com.univ.validator.AuthValidator;
 import com.univ.validator.ValidationError;
+import com.univ.validator.ValidationResult;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -37,10 +37,10 @@ public class LoginController extends HttpServlet {
         try {
             AuthService authService = new AuthServiceImpl();
             HttpSession httpSession = req.getSession(true);
-            AuthValidator authValidator = authService.login(user, httpSession);
+            ValidationResult validationResult = authService.login(user, httpSession);
             SessionManager sessionManager = new SessionManager(httpSession);
-            if (authValidator.isNotValid()) {
-                ValidationError validationError = authValidator.getValidationErrors().get(0);
+            if (validationResult.isInvalid()) {
+                ValidationError validationError = validationResult.getErrors().get(0);
                 req.setAttribute(validationError.getErrorField(),
                         validationError.getMessage());
                 req.setAttribute("username", username);

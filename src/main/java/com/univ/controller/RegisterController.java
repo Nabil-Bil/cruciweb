@@ -7,8 +7,8 @@ import com.univ.service.UserServiceImpl;
 import com.univ.util.Routes;
 import com.univ.util.SessionManager;
 import com.univ.util.ViewResolver;
-import com.univ.validator.UserValidator;
 import com.univ.validator.ValidationError;
+import com.univ.validator.ValidationResult;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,9 +36,9 @@ public class RegisterController extends HttpServlet {
 
         User user = new User(username, password, Role.USER);
         try {
-            UserValidator userValidator = userService.createUser(user, passwordConfirmation);
-            if (userValidator.isNotValid()) {
-                ValidationError validationError = userValidator.getValidationErrors().get(0);
+            ValidationResult validationResult = userService.createUser(user, passwordConfirmation);
+            if (validationResult.isInvalid()) {
+                ValidationError validationError = validationResult.getErrors().get(0);
                 req.setAttribute(validationError.getErrorField(),
                         validationError.getMessage());
                 req.setAttribute("username", username);

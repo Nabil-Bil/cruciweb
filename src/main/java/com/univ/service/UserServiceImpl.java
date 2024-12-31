@@ -5,6 +5,7 @@ import com.univ.repository.UserRepository;
 import com.univ.repository.UserRepositoryImpl;
 import com.univ.util.BCryptUtil;
 import com.univ.validator.UserValidator;
+import com.univ.validator.ValidationResult;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
@@ -27,12 +28,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public UserValidator createUser(User user, String passwordConfirmation) throws Exception {
+    public ValidationResult createUser(User user, String passwordConfirmation) throws Exception {
         Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
         UserValidator userValidator = UserValidator.of(user, optionalUser);
-        userValidator.validateUsername().validatePassword(passwordConfirmation);
+        ValidationResult validationResult = userValidator.validateUsername().validatePassword(passwordConfirmation).build();
 
-        if (userValidator.isValid()) {
+        if (validationResult.isValid()) {
             String userPassword = user.getPassword();
             String hashedPassword = BCryptUtil.hashPassword(userPassword);
             User cloneUser = User.copyOf(user);
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
             User savedUser = userRepository.save(cloneUser);
             user.setId(savedUser.getId());
         }
-        return userValidator;
+        return validationResult;
     }
 
     public User updateUser(User user) throws Exception {

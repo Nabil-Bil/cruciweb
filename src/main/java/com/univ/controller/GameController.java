@@ -7,7 +7,7 @@ import com.univ.util.Routes;
 import com.univ.util.SessionManager;
 import com.univ.util.Utils;
 import com.univ.util.ViewResolver;
-import com.univ.validator.GameValidator;
+import com.univ.validator.ValidationResult;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -67,11 +67,11 @@ public class GameController extends HttpServlet {
             }
             Game game = optionalGame.get();
             game.setGridRepresentation(gridJson);
-            GameValidator gameValidator = gameService.saveAndValidateGame(game);
-            if (gameValidator.isValid()) {
+            ValidationResult validationResult = gameService.saveAndValidateGame(game);
+            if (validationResult.isValid()) {
                 req.setAttribute("success", "Tu as gagné!");
             } else {
-                req.setAttribute("error", gameValidator.getValidationErrors().get(0).getMessage());
+                req.setAttribute("error", validationResult.getErrors().get(0).getMessage());
             }
             req.setAttribute("game", game);
             ViewResolver.resolve(req, "games/game.jsp").forward(req, resp);

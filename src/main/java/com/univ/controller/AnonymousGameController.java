@@ -9,7 +9,7 @@ import com.univ.service.GridServiceImpl;
 import com.univ.util.Routes;
 import com.univ.util.Utils;
 import com.univ.util.ViewResolver;
-import com.univ.validator.GameValidator;
+import com.univ.validator.ValidationResult;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -56,11 +56,11 @@ public class AnonymousGameController extends HttpServlet {
             Game game = new Game(grid.get());
             game.setGridRepresentation(gridJson);
             GameService gameService = new GameServiceImpl();
-            GameValidator gameValidator = gameService.validateGame(game);
-            if (gameValidator.isValid()) {
+            ValidationResult validationResult = gameService.validateGame(game);
+            if (validationResult.isValid()) {
                 req.setAttribute("success", "Tu as gagné!");
             } else {
-                req.setAttribute("error", gameValidator.getValidationErrors().get(0).getMessage());
+                req.setAttribute("error", validationResult.getErrors().get(0).getMessage());
             }
             req.setAttribute("game", game);
             ViewResolver.resolve(req, "games/game.jsp").forward(req, resp);

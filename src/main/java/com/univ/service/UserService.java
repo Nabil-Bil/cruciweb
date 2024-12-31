@@ -1,7 +1,7 @@
 package com.univ.service;
 
 import com.univ.model.entity.User;
-import com.univ.validator.UserValidator;
+import com.univ.validator.ValidationResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface UserService {
     Optional<User> getUserById(UUID id) throws Exception;
 
-    UserValidator createUser(User user, String passwordConfirmation) throws Exception;
+    ValidationResult createUser(User user, String passwordConfirmation) throws Exception;
 
     User updateUser(User user) throws Exception;
 

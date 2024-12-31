@@ -5,6 +5,7 @@ import com.univ.repository.GameRepository;
 import com.univ.repository.GameRepositoryImpl;
 import com.univ.util.SessionManager;
 import com.univ.validator.GameValidator;
+import com.univ.validator.ValidationResult;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.*;
@@ -45,17 +46,16 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameValidator validateGame(Game game) throws Exception {
+    public ValidationResult validateGame(Game game) throws Exception {
         GameValidator gameValidator = GameValidator.of(game);
-        return gameValidator.validateGameState();
+        return gameValidator.validateGameState().build();
     }
 
     @Override
-    public GameValidator saveAndValidateGame(Game game) throws Exception {
-        GameValidator gameValidator = this.validateGame(game);
-
+    public ValidationResult saveAndValidateGame(Game game) throws Exception {
+        ValidationResult validationResult = this.validateGame(game);
         gameRepository.update(game);
-        return gameValidator;
+        return validationResult;
     }
 
     private Map<String, Object> paginateGames(List<Game> games, int page, int pageSize) {
