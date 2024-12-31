@@ -10,7 +10,9 @@
             <page-encoding>UTF-8</page-encoding>
         </jsp-property-group>
     </jsp-config>
-
+    <listener>
+        <listener-class>com.univ.listener.DatabaseInitListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>DefaultServlet</servlet-name>
         <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
