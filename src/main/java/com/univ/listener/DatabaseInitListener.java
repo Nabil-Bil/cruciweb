@@ -24,7 +24,6 @@ public class DatabaseInitListener implements ServletContextListener {
             if (!isDataLoaded(em)) {
                 LOGGER.info("Data not found. Executing initialization script...");
                 executeScript(em, "/META-INF/init.sql");
-                executeScript(em, "/META-INF/data.sql");
             } else {
                 LOGGER.info("Data Already Loaded. Skipping script execution.");
             }
