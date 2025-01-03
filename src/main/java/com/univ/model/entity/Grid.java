@@ -17,27 +17,32 @@ import java.util.*;
 public class Grid {
     @Column(nullable = false, name = "CREATED_AT", updatable = false)
     private final Date createdAt = new Date();
+
     @Column
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     @Column(nullable = false, length = 50, updatable = false)
     @NotBlank
     private String name;
+
     @Column(nullable = false, updatable = false, length = 1024, name = "GRID_REPRESENTATION")
     private String gridRepresentation;
+
     @Column(nullable = false, length = 50, updatable = false)
     @Enumerated(EnumType.STRING)
     @NotBlank
     private GameDifficulty difficulty;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "width", column = @Column(nullable = false)),
             @AttributeOverride(name = "height", column = @Column(nullable = false))
     })
     private Dimension dimensions;
-    @ManyToOne(targetEntity = User.class)
     @JoinColumn(nullable = false, updatable = false, name = "USER_ID")
+    @ManyToOne(targetEntity = User.class)
     private User createdBy;
 
     @OneToMany(mappedBy = "grid", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Clue.class)
@@ -45,9 +50,11 @@ public class Grid {
     @Column(nullable = true, name = "UPDATED_AT", updatable = true)
     private Date updatedAt;
 
+    @OneToMany(mappedBy = "grid", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Game.class)
+    private List<Game> games;
+
     @Transient
     private char[][] matrixRepresentation;
-
 
     public Grid() {
     }
@@ -179,6 +186,10 @@ public class Grid {
 
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public List<Game> getGames() {
+        return games;
     }
 
     public List<Clue> getClues() {

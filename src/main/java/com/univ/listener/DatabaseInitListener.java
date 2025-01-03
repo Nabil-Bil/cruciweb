@@ -21,11 +21,12 @@ public class DatabaseInitListener implements ServletContextListener {
             EntityManagerFactory emf = EntityManagerProvider.instance().getEntityManagerFactory();
             EntityManager em = emf.createEntityManager();
 
-            if (!isAdminUserPresent(em)) {
-                LOGGER.info("Admin user not found. Executing initialization script...");
+            if (!isDataLoaded(em)) {
+                LOGGER.info("Data not found. Executing initialization script...");
                 executeScript(em, "/META-INF/init.sql");
+                executeScript(em, "/META-INF/data.sql");
             } else {
-                LOGGER.info("Admin user already exists. Skipping script execution.");
+                LOGGER.info("Data Already Loaded. Skipping script execution.");
             }
 
             em.close();
@@ -34,16 +35,15 @@ public class DatabaseInitListener implements ServletContextListener {
         }
     }
 
-    private boolean isAdminUserPresent(EntityManager em) {
+    private boolean isDataLoaded(EntityManager em) {
         try {
-            String query = "SELECT COUNT(u) FROM User u WHERE u.username = :username";
+            String query = "SELECT COUNT(u) FROM User u";
             Query q = em.createQuery(query);
-            q.setParameter("username", "admin");
 
             Long count = (Long) q.getSingleResult();
             return count > 0;
         } catch (Exception e) {
-            LOGGER.severe("Error checking for admin user: " + e.getMessage());
+            LOGGER.severe("Error checking for users existance: " + e.getMessage());
             return false;
         }
     }

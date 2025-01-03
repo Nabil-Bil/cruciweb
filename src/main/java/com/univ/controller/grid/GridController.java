@@ -39,7 +39,7 @@ public class GridController extends HttpServlet {
             Optional<Grid> grid = gridService.getGridById(gridId);
 
             if (Utils.validateRequest(gridId, resp, grid.isEmpty())) {
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
             } else {
                 req.setAttribute("grid", grid.get());
                 ViewResolver.resolve(req, "grids/grid.jsp").forward(req, resp);
@@ -85,7 +85,6 @@ public class GridController extends HttpServlet {
             resp.sendRedirect(req.getContextPath().concat("/game/".concat(game.getId().toString())));
 
         } catch (Exception e) {
-            e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
 

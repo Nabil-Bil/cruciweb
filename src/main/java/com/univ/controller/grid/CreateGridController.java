@@ -55,7 +55,7 @@ public class CreateGridController extends HttpServlet {
                 ViewResolver.resolve(req, "grids/create.jsp").forward(req, resp);
             }
         } catch (Exception e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
     }

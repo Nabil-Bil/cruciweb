@@ -4,7 +4,6 @@ import com.univ.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import java.util.Date;
 import java.util.List;
@@ -33,11 +32,9 @@ public class User {
     @Column(nullable = true, name = "UPDATED_AT", updatable = true)
     private Date updatedAt;
 
-    @CascadeOnDelete
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Grid.class)
     private List<Grid> grids;
-
-    @CascadeOnDelete
+    
     @OneToMany(mappedBy = "playedBy", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Game.class)
     private List<Game> games;
 
