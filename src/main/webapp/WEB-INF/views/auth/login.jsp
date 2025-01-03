@@ -15,7 +15,7 @@
     <form action="<%=request.getContextPath().concat(Routes.LOGIN_ROUTE)%>" method="post" id="auth-form" class="card">
         <h1>Connexion</h1>
         <span class="${not empty username_error ? 'error' : 'hidden'}">${username_error}</span>
-        <label for="username">Nom d'utilsiateur</label>
+        <label for="username">Nom d'utilisateur</label>
         <input type="text" name="username" id="username" required
                class="${not empty username_error ? 'error-input' : ''}" value="${username}"/>
         <span class="${not empty password_error ? 'error' : 'hidden'}">${password_error}</span>

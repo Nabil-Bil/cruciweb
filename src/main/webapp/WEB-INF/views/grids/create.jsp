@@ -63,7 +63,7 @@
             <label for="grid-difficulty">Difficulté :</label>
             <select id="grid-difficulty" name="difficulty">
                 <option value="easy">Facile</option>
-                <option value="medium">Moyen</option>
+                <option value="medium">Moyenne</option>
                 <option value="hard">Difficile</option>
             </select>
         </div>

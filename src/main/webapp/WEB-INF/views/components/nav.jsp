@@ -12,7 +12,7 @@
         <h1>CruciWeb</h1>
     </a>
     <ul>
-        <li><a href="<%=request.getContextPath()%>/">Acceuil</a></li>
+        <li><a href="<%=request.getContextPath()%>/">Accueil</a></li>
         <li><a href="<%=request.getContextPath().concat(Routes.GRIDS_ROUTE)%>">Grilles</a></li>
         <% if (isAdmin) { %>
         <li><a href="<%=request.getContextPath().concat(Routes.USERS_ROUTE)%>">Utilisateurs</a></li>
@@ -21,7 +21,7 @@
         <li><a href="<%=request.getContextPath().concat(Routes.GAMES_ROUTE)%>">Mes Parties</a></li>
         <li>
             <form action="<%=request.getContextPath().concat(Routes.LOGOUT_ROUTE)%>" method="post">
-                <input type="submit" value="Se deconnecter">
+                <input type="submit" value="Se déconnecter">
                 <input type="hidden" name="csrfToken" value="${csrfToken}"/>
             </form>
         </li>

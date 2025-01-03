@@ -35,7 +35,7 @@
         <div>
             <% if (sessionManager.isLoggedIn() && !sessionManager.isAdmin()) { %>
             <a class="button" style="text-align: center;"
-               href="<%=request.getContextPath().concat(Routes.CREATE_GRID_ROUTE)%>">Create</a>
+               href="<%=request.getContextPath().concat(Routes.CREATE_GRID_ROUTE)%>">Créer</a>
             <% } %>
 
 
@@ -64,7 +64,7 @@
     </div>
     <div class="grid-list-container">
         <%if (gridList.isEmpty()) {%>
-        <p style="font-size: 20px;">Aucune Grille Trouvé</p>
+        <p style="font-size: 20px;">Aucune Grille Trouvée</p>
         <%
         } else {
             for (Grid grid : gridList) {
