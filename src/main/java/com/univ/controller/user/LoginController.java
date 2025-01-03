@@ -13,7 +13,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -36,9 +35,7 @@ public class LoginController extends HttpServlet {
 
         try {
             AuthService authService = new AuthServiceImpl();
-            HttpSession httpSession = req.getSession(true);
-            ValidationResult validationResult = authService.login(user, httpSession);
-            SessionManager sessionManager = new SessionManager(httpSession);
+            ValidationResult validationResult = authService.login(user, req);
             if (validationResult.isInvalid()) {
                 ValidationError validationError = validationResult.getErrors().get(0);
                 req.setAttribute(validationError.getErrorField(),
@@ -46,6 +43,7 @@ public class LoginController extends HttpServlet {
                 req.setAttribute("username", username);
                 ViewResolver.resolve(req, "auth/login.jsp").forward(req, resp);
             } else {
+                SessionManager sessionManager = new SessionManager(req.getSession());
                 if (sessionManager.isAdmin()) {
                     resp.sendRedirect(req.getContextPath() + Routes.USERS_ROUTE);
                 } else {

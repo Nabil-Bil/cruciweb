@@ -44,7 +44,11 @@ public class RegisterController extends HttpServlet {
                 req.setAttribute("username", username);
                 ViewResolver.resolve(req, "auth/register.jsp").forward(req, resp);
             } else {
-                HttpSession session = req.getSession(true);
+                HttpSession session = req.getSession();
+                if (session != null) {
+                    session.invalidate();
+                }
+                session = req.getSession(true);
                 SessionManager sessionManager = new SessionManager(session);
                 sessionManager.setLoggedUser(user.getId(), user.getRole());
 

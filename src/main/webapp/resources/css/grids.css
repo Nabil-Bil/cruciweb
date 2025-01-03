@@ -36,6 +36,7 @@
     display: flex;
     gap: 25px;
     flex: 4;
+    justify-content: end;
 }
 
 

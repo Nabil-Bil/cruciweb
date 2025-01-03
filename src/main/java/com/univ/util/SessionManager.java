@@ -7,7 +7,7 @@ public final class SessionManager {
 
     private static final String SESSION_USER_ID_KEY = "userId";
     private static final String SESSION_ROLE_KEY = "role";
-    private final HttpSession session;
+    private HttpSession session;
 
     public SessionManager(HttpSession session) {
         this.session = session;
@@ -20,7 +20,7 @@ public final class SessionManager {
     public boolean isAdmin() {
         return isLoggedIn() && session.getAttribute(SESSION_ROLE_KEY) != null && session.getAttribute(SESSION_ROLE_KEY).equals(Role.ADMIN);
     }
-    
+
     public Object getLoggedInUserId() {
         if (session == null)
             return null;
@@ -38,6 +38,10 @@ public final class SessionManager {
         if (session != null) {
             session.setAttribute(key, value);
         }
+    }
+
+    public void setSession(HttpSession session) {
+        this.session = session;
     }
 
     public Object getAttribute(String key) {

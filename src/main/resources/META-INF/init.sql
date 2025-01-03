@@ -1,3 +1,3 @@
 INSERT INTO `users` (`ID`, `CREATED_AT`, `PASSWORD`, `ROLE`, `UPDATED_AT`, `USERNAME`)
 VALUES ('9a58b695-c6c8-11ef-bddf-0242ac120002', '2024-12-30 17:10:36',
-        '$2a$10$gq6rZo0I6HbNIbyj7Xvg/eR2fsa8GjJ7I6DmXq.avLV8rfplB85uu', 'ADMIN', NULL, 'admin')
+        '$2a$10$tXL3UT1Dy1I3mxY3p8RGn.OGG4KAvuRqDv0Ptuv9RPnJGJPAp8RxC', 'ADMIN', NULL, 'admin')

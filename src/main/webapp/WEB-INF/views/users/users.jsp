@@ -45,7 +45,7 @@
             <td><%= sdf.format(user.getCreatedAt())%>
             </td>
             <td class="action-buttons">
-                <button class="edit">Modifier</button>
+                
                 <form action="<%=request.getContextPath().concat(Routes.USERS_ROUTE)%>" method="POST"
                       onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
                     <input type="hidden" name="_method" value="DELETE"/>
