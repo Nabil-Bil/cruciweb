@@ -1,3 +1,36 @@
+# Projet de Jeu de Mots Croisés
+
+Ce projet est une application web développée en **Java EE** ou **Jakarta EE** avec **JPA** (Java Persistence API) qui permet aux utilisateurs de jouer à des jeux de mots croisés interactifs. L'application repose sur une architecture robuste et intègre un système de gestion des grilles, des indices et des parties. L'objectif principal est de fournir une expérience utilisateur simple et efficace, tout en garantissant la cohérence et l'intégrité des données dans la base.
+
+## Fonctionnalités principales
+
+- **Gestion des utilisateurs** :  
+  Les utilisateurs peuvent s'inscrire, se connecter et accéder à leurs parties sauvegardées.
+- **Création et gestion de grilles** :  
+  Chaque utilisateur peut créer des grilles de mots croisés personnalisées avec des indices associés.
+- **Système de parties (games)** :  
+  Les joueurs peuvent jouer à des grilles existantes, sauvegarder leur progression et reprendre leurs parties à tout moment.
+- **Suppression en cascade** :  
+  Lorsque des utilisateurs ou des grilles sont supprimés, toutes les données associées (indices, parties, etc.) sont également supprimées automatiquement pour garantir la cohérence des données.
+
+## Technologies utilisées
+
+- **Backend** : Java EE, JPA, Hibernate
+- **Base de données** : MySQL
+- **Architecture** :  
+  Modèle relationnel avec des entités pour `User`, `Grid`, `Clue` et `Game`.
+- **Gestion des clés étrangères** :  
+  Les relations entre les entités incluent des suppressions en cascade (via `ON DELETE CASCADE`).
+
+## Objectif pédagogique
+
+Ce projet a été conçu dans le cadre d'un exercice universitaire. Il met en pratique plusieurs concepts essentiels :
+
+- Les bases de la persistance des données avec JPA.
+- La gestion des relations entre entités dans une base relationnelle.
+- La création et manipulation de données cohérentes pour tester et valider une application.
+- L'utilisation des contraintes de base de données (`ON DELETE CASCADE`) pour gérer les dépendances entre tables.
+
 # Guide de déploiement - Application Jakarta EE
 
 ## Prérequis
