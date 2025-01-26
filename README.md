@@ -12,48 +12,52 @@
 ### Configuration générale
 
 1. **Préparation de l'archive**
-    - Téléchargez l'archive ROOT.war
+
+   - Téléchargez l'archive ROOT.war
 
 2. **Configuration de la base de données**
-    - Si ce n'est pas déjà fait, connectez-vous en tant que root MySQL
-    - Créez un utilisateur avec les droits nécessaires
-    - Créez une base de données pour le projet
+
+   - Si ce n'est pas déjà fait, connectez-vous en tant que root MySQL
+   - Créez un utilisateur avec les droits nécessaires
+   - Créez une base de données pour le projet
 
 3. **Déploiement sur Tomcat**
-    - Accédez à l'interface Tomcat Manager : `http://<ip_serveur>:<port>/manager`
-    - Authentifiez-vous avec vos identifiants Tomcat
-    - Retirez l'application existante avec le path "/"
-    - Dans la section "Fichier WAR à déployer"
-        - Sélectionnez le fichier ROOT.war
-        - Cliquez sur "Déployer"
+
+   - Accédez à l'interface Tomcat Manager : `http://<ip_serveur>:<port>/manager`
+   - Authentifiez-vous avec vos identifiants Tomcat
+   - Retirez l'application existante avec le path "/"
+   - Dans la section "Fichier WAR à déployer"
+     - Sélectionnez le fichier ROOT.war
+     - Cliquez sur "Déployer"
 
 4. **Configuration de la persistance**
-    - Connectez-vous au serveur via SSH : `ssh <utilisateur>@<ip_serveur>`
-    - Accédez aux droits root (via `sudo` ou `su -`)
-    - Naviguez vers le fichier persistence.xml situé dans :
-      `/var/lib/tomcat<version>/webapps/ROOT/WEB-INF/classes/META-INF/persistence.xml`
-    - Modifiez le fichier avec votre éditeur préféré (vous pouvez utiliser nano ou vi selon vos préférences 😉)
-    -
-        - Exemple avec nano :
-          `nano /var/lib/tomcat<version>/webapps/ROOT/WEB-INF/classes/META-INF/persistence.xml`
+
+   - Connectez-vous au serveur via SSH : `ssh <utilisateur>@<ip_serveur>`
+   - Accédez aux droits root (via `sudo` ou `su -`)
+   - Naviguez vers le fichier persistence.xml situé dans :
+     `/var/lib/tomcat<version>/webapps/ROOT/WEB-INF/classes/META-INF/persistence.xml`
+   - Modifiez le fichier avec votre éditeur préféré (vous pouvez utiliser nano ou vi selon vos préférences 😉)
+   - - Exemple avec nano :
+       `nano /var/lib/tomcat<version>/webapps/ROOT/WEB-INF/classes/META-INF/persistence.xml`
 
 5. **Modification des propriétés de persistance**
    Modifiez les propriétés suivantes :
+
    ```xml
-   <property name="jakarta.persistence.jdbc.url" 
+   <property name="jakarta.persistence.jdbc.url"
              value="jdbc:mysql://<addresse_db>:<port_db>/<db_name>"/>
-   <property name="jakarta.persistence.jdbc.user" 
+   <property name="jakarta.persistence.jdbc.user"
              value="<db_user>"/>
-   <property name="jakarta.persistence.jdbc.password" 
+   <property name="jakarta.persistence.jdbc.password"
              value="<db_password>"/>
    ```
 
 6. **Finalisation**
-    - Sauvegardez le fichier persistence.xml
-    - Retournez à l'interface Tomcat Manager
-    - Démarrez l'application (path "/")
+   - Sauvegardez le fichier persistence.xml
+   - Retournez à l'interface Tomcat Manager
+   - Démarrez l'application (path "/")
 7. **Accès à l'application**
-    - Accédez à l'application via l'URL : `http://<ip_serveur>:<port>/`
+   - Accédez à l'application via l'URL : `http://<ip_serveur>:<port>/`
 
 ### Configuration spécifique à la machine virtuelle fournie
 
@@ -67,17 +71,17 @@
 **Identifiants :**
 
 - SSH :
-    - Utilisateur : `urouen`
-    - Mot de passe : `madrillet`
+  - Utilisateur : `urouen`
+  - Mot de passe : `madrillet`
 - Root :
-    - Mot de passe : `rotomagus`
+  - Mot de passe : `rotomagus`
 - Tomcat Manager :
-    - Utilisateur : `tomcat`
-    - Mot de passe : `tomcat`
+  - Utilisateur : `tomcat`
+  - Mot de passe : `tomcat`
 - Base de données :
-    - Nom de la base : `projet`
-    - Utilisateur : `projet`
-    - Mot de passe : `tejorp`
+  - Nom de la base : `projet`
+  - Utilisateur : `projet`
+  - Mot de passe : `tejorp`
 
 **Configuration persistence.xml :**
 
@@ -105,3 +109,28 @@ Une fois le déploiement terminé, pour administrer l'application, vous pouvez v
 
 Les tables de la base de données ainsi que l'administrateur seront créées automatiquement lors du premier démarrage de
 l'application.
+
+## Illustrations de l'application
+
+Voici quelques captures d'écran de l'application pour vous donner un aperçu de son interface et de ses fonctionnalités :
+
+1. **Page d'accueil**
+   ![Page d'accueil](images/sc1.png)
+
+2. **Page d'inscription**
+   ![Page d'inscription](images/sc2.png)
+
+3. **Page de connexion**
+   ![Page de connexion](images/sc3.png)
+
+4. **Page listant toutes les grilles**
+   ![Page listant toutes les grilles](images/sc4.png)
+
+5. **Page de création de grille de mot croisé**
+   ![Page de création de grille de mot croisé](images/sc5.png)
+
+6. **Page de la grille (partie)**
+   ![Page de la grille (partie)](images/sc6.png)
+
+7. **Page de gestion d'utilisateur**
+   ![Page de gestion d'utilisateur](images/sc7.png)
